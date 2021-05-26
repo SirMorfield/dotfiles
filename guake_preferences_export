@@ -1,0 +1,45 @@
+#guake --save-preferences guake_preferences_export
+#guake --restore-preferences guake_preferences_export
+
+
+[general]
+abbreviate-tab-names=false
+compat-delete='delete-sequence'
+display-n=0
+gtk-prefer-dark-theme=true
+gtk-theme-name='Adwaita-dark'
+history-size=10000
+infinite-history=false
+max-tab-name-length=100
+mouse-display=true
+open-tab-cwd=true
+prompt-on-quit=false
+quick-open-command-line='gedit %(file_path)s'
+restore-tabs-notify=true
+restore-tabs-startup=true
+save-tabs-when-changed=false
+scroll-keystroke=true
+use-default-font=true
+use-popup=true
+use-scrollbar=true
+use-trayicon=true
+window-halignment=0
+window-height=100
+window-losefocus=true
+window-refocus=true
+window-tabbar=true
+window-width=100
+
+[keybindings/global]
+show-hide='<Alt>t'
+
+[keybindings/local]
+reset-terminal='<Primary>q'
+
+[style/background]
+transparency=91
+
+[style/font]
+allow-bold=true
+palette='#000000000000:#cccc00000000:#4e4e9a9a0606:#c4c4a0a00000:#34346565a4a4:#757550507b7b:#060698209a9a:#d3d3d7d7cfcf:#555557575353:#efef29292929:#8a8ae2e23434:#fcfce9e94f4f:#72729f9fcfcf:#adad7f7fa8a8:#3434e2e2e2e2:#eeeeeeeeecec:#ffffffffffff:#000000000000'
+palette-name='Tango'

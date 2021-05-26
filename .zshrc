@@ -80,13 +80,7 @@ alias ope="xdg-open"
 alias leak="valgrind -q --leak-check=full --show-leak-kinds=all --track-origins=yes"
 alias clip="xclip -selection c"
 
-alias ..2="../../"
-alias ..3="../../../"
-alias ..4="../../../../"
-
 # alias netstat="netstat -tulpn | grep :"
-
-alias norminette+="python ~/.norminette+/run.py"
 
 function drop { curl -X POST -F "upfile=@$1" https://joppekoers.nl/drop/upload -F "identifier=$2"; }
 export drop
@@ -97,6 +91,7 @@ export droplocal
 function mkcd { mkdir "$1" && cd "$1"; }
 export mkcd
 
+# create preofrmace profile of C program
 function profile {
   valgrind -q --tool=callgrind --callgrind-out-file=/tmp/callgrind.out $@
   gprof2dot --format=callgrind --output=/tmp/out.dot /tmp/callgrind.out
@@ -114,8 +109,6 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$PATH:$HOME/.local/bin"
 
-# export PATH="/usr/share/swift/5.3.2/usr/bin:$PATH"
-
 export ANDROID_HOME=$HOME/.Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
@@ -124,13 +117,16 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 export REACT_EDITOR=vscode
 
+# Only ignore duplicate terminal commands, save the ones prefixed with whitespace
 export HISTCONTROL=ignoredups
 
 
+# run before every cmd
 function preexec() {
   timer=$(($(date +%s%0N)/1000000))
 }
 
+# run before every cmd
 function precmd() {
   if [ $timer ]; then
     now=$(($(date +%s%0N)/1000000))
@@ -141,6 +137,7 @@ function precmd() {
   fi
 }
 
+# allow wildcard (*) matcing in terminal
 setopt no_bare_glob_qual
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
