@@ -36,6 +36,12 @@ https://mijn.hostnet.nl/diensten/joppekoers.nl/domeinnaam/
 host host -t txt _acme-challenge.joppekoers.nl
 sudo systemctl restart nginx
 
+> Disable sound effects
+dconf write /org/gnome/desktop/sound/event-sounds false
+
+> Set default editor
+sudo update-alternatives --config editor 
+
 > win x installs
 Softwarebeam
 Schoolspot
