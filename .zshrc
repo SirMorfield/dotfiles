@@ -101,7 +101,7 @@ function profile {
 
 # copy all folders in directory exept the .git/ folder
 function copyGit {
-  find "$1" -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
+  find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
 }
 
 # batcat
