@@ -99,6 +99,11 @@ function profile {
   rm -f /tmp/out.dot
 }
 
+# copy all folders in directory exept the .git/ folder
+function copyGit {
+  find "$1" -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
+}
+
 # batcat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export BAT_PAGER="less -RF"
