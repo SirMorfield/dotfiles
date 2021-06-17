@@ -13,10 +13,10 @@ else
 	server="joppe@joppekoers.nl"
 fi
 
-if [ $(hostname) == "laptop" ]; then
-	host="laptop"
-else
+if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then
 	host="codam"
+else
+	host=$(hostname)
 fi
 
 if [ "$2" == "all" ]; then
