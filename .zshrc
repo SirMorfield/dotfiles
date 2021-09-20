@@ -1,4 +1,4 @@
-export ZSH="/home/joppe/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
@@ -73,8 +73,8 @@ alias l="ls -Ahok"
 
 alias ssh1="ssh joppe@192.168.2.1"
 alias sshp1="ssh -p 10001 joppe@joppekoers.nl"
-alias sshfs1="sshfs -o follow_symlinks joppe@192.168.2.1: /home/joppe/server1/"
-alias sshfsp1="sshfs -o follow_symlinks -p 10001 joppe@joppekoers.nl: /home/joppe/server1/"
+alias sshfs1="sshfs -o follow_symlinks joppe@192.168.2.1: $HOME/server1/"
+alias sshfsp1="sshfs -o follow_symlinks -p 10001 joppe@joppekoers.nl: $HOME/server1/"
 
 alias ope="xdg-open"
 alias leak="valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --track-origins=yes"
