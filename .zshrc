@@ -104,7 +104,9 @@ function copyGit {
 
 # batcat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-export BAT_PAGER="less -RF"
+if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+  export BAT_PAGER="less -RF"
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
