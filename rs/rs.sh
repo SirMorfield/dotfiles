@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$#" -ne 2 ]; then
-	echo "Supply 2 arguments: push|pull dir"
+	echo "Usage: ./rs.sh push|pull dir|all"
 	exit 1
 fi
 
@@ -28,5 +28,5 @@ fi
 if [ "$1" = "push" ]; then
 	sh -c "rsync -ahP --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ --links -e $sshcmd $dir $server:/home/joppe/$host/"
 else
-	echo "Invalid argument, use push|pull dir|all"
+	echo "pull not implemented"
 fi

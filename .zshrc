@@ -77,7 +77,7 @@ alias sshfs1="sshfs -o follow_symlinks joppe@192.168.2.1: /home/joppe/server1/"
 alias sshfsp1="sshfs -o follow_symlinks -p 10001 joppe@joppekoers.nl: /home/joppe/server1/"
 
 alias ope="xdg-open"
-alias leak="valgrind -q --leak-check=full --show-leak-kinds=all --track-origins=yes"
+alias leak="valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --track-origins=yes"
 alias clip="xclip -selection c"
 
 # alias netstat="netstat -tulpn | grep :"
@@ -91,7 +91,6 @@ export droplocal
 function mkcd { mkdir "$1" && cd "$1"; }
 export mkcd
 
-# create preofrmace profile of C program
 function profile {
   valgrind -q --tool=callgrind --callgrind-out-file=/tmp/callgrind.out $@
   gprof2dot --format=callgrind --output=/tmp/out.dot /tmp/callgrind.out
@@ -99,7 +98,6 @@ function profile {
   rm -f /tmp/out.dot
 }
 
-# copy all folders in directory exept the .git/ folder
 function copyGit {
   find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
 }
@@ -114,6 +112,8 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$PATH:$HOME/.local/bin"
 
+# export PATH="/usr/share/swift/5.3.2/usr/bin:$PATH"
+
 export ANDROID_HOME=$HOME/.Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
@@ -122,27 +122,29 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 export REACT_EDITOR=vscode
 
+
 # Only ignore duplicate terminal commands, save the ones prefixed with whitespace
 export HISTCONTROL=ignoredups
 
 
-# run before every cmd
-function preexec() {
-  timer=$(($(date +%s%0N)/1000000))
-}
+# function preexec() {
+#   timer=$(($(date +%s%0N)/1000000))
+# }
 
-# run before every cmd
-function precmd() {
-  if [ $timer ]; then
-    now=$(($(date +%s%0N)/1000000))
-    elapsed=$(($now-$timer))
+# function precmd() {
+#   if [ $timer ]; then
+#     now=$(($(date +%s%0N)/1000000))
+#     elapsed=$(($now-$timer))
 
-    export RPROMPT="%F{cyan}${elapsed}ms %{$reset_color%}"
-    unset timer
-  fi
-}
+#     export RPROMPT="%F{cyan}${elapsed}ms %{$reset_color%}"
+#     unset timer
+#   fi
+# }
 
-# allow wildcard (*) matcing in terminal
+# allow * matcing in terminal
 setopt no_bare_glob_qual
+
+# disable rm * conformation
+setopt rmstarsilent
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
