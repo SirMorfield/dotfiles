@@ -104,7 +104,7 @@ function copyGit {
 
 # batcat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+if [ "$(uname -s)" = "Linux" ]; then
   export BAT_PAGER="less -RF"
 fi
 
@@ -117,13 +117,15 @@ export PATH="$PATH:$HOME/.local/bin"
 # export PATH="/usr/share/swift/5.3.2/usr/bin:$PATH"
 
 export ANDROID_HOME=$HOME/.Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+# export PATH=$PATH:$ANDROID_HOME/emulator
+# export PATH=$PATH:$ANDROID_HOME/tools
+# export PATH=$PATH:$ANDROID_HOME/tools/bin
+# export PATH=$PATH:$ANDROID_HOME/platform-tools
+# export REACT_EDITOR=vscode
 
-export REACT_EDITOR=vscode
-
+if [ "$(uname -s)" = "Darwin" ]; then
+  export PATH=$PATH:$HOME/.brew/bin
+fi
 
 # Only ignore duplicate terminal commands, save the ones prefixed with whitespace
 export HISTCONTROL=ignoredups
