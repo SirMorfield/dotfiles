@@ -67,7 +67,11 @@ fi
 
 unalias -a
 
-alias ls="ls --color=auto"
+if [ "$(uname -s)" = "Linux" ]; then
+  alias ls="ls --color=auto"
+else
+  alias ls="ls -G"
+fi
 alias rcp="rsync -ah --info=progress2"
 alias l="ls -Ahok"
 
@@ -152,3 +156,6 @@ setopt no_bare_glob_qual
 setopt rmstarsilent
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -f /etc/zsh.cnf ]; then
+ . /etc/zsh.cnf
+fi
