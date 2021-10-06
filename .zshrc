@@ -112,15 +112,16 @@ if [ "$(uname -s)" = "Linux" ]; then
   export BAT_PAGER="less -RF"
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# PATH stuff
 
 export PATH="$PATH:$HOME/.local/bin"
-
 # export PATH="/usr/share/swift/5.3.2/usr/bin:$PATH"
 
-export ANDROID_HOME=$HOME/.Android/Sdk
+# export ANDROID_HOME=$HOME/.Android/Sdk
 # export PATH=$PATH:$ANDROID_HOME/emulator
 # export PATH=$PATH:$ANDROID_HOME/tools
 # export PATH=$PATH:$ANDROID_HOME/tools/bin
@@ -128,8 +129,11 @@ export ANDROID_HOME=$HOME/.Android/Sdk
 # export REACT_EDITOR=vscode
 
 if [ "$(uname -s)" = "Darwin" ]; then
+  export PATH="$PATH:$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   export PATH=$PATH:$HOME/.brew/bin
 fi
+
+# OTHER
 
 # Only ignore duplicate terminal commands, save the ones prefixed with whitespace
 export HISTCONTROL=ignoredups
