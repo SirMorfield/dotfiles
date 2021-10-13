@@ -59,7 +59,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>while true; do ~/.rs/rs.sh push all; sleep 500; done
+					<string>while true; do sh ~/.dotfiles/rs/rs.sh push all; sleep 500; done
 </string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
@@ -96,6 +96,8 @@
 				</array>
 				<key>OutputUUID</key>
 				<string>B705231D-D30E-4D39-B7E4-1689DE471333</string>
+				<key>ShowWhenRun</key>
+				<false/>
 				<key>UUID</key>
 				<string>087CEFF1-8604-4945-B7F0-531B0C06F603</string>
 				<key>UnlocalizedApplications</key>
@@ -170,12 +172,10 @@
 						<string>4</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:252.000000</string>
+				<string>309.000000:304.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
