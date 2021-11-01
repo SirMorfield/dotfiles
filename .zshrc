@@ -43,7 +43,9 @@ HIST_STAMPS="dd/mm/yyyy"
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(zsh-autosuggestions)
+ZSH_TMUX_AUTOSTART=true
+
+plugins=(zsh-autosuggestions tmux)
 
 source $ZSH/oh-my-zsh.sh
 
