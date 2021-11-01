@@ -52,7 +52,7 @@ else
   alias ls="ls -G"
 fi
 alias rcp="rsync -ah --info=progress2"
-alias l="ls -Ahok"
+alias l="ls -Ahlk"
 
 alias ssh1="ssh joppe@192.168.2.1"
 alias sshp1="ssh -p 10001 joppe@joppekoers.nl"
