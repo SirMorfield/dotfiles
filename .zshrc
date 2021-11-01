@@ -161,6 +161,17 @@ setopt no_bare_glob_qual
 # disable rm * conformation
 setopt rmstarsilent
 
+### Fix slowness of pastes (meant for zsh-syntax-highlighting.zsh but still works)
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if [ -f /etc/zsh.cnf ]; then
  . /etc/zsh.cnf
