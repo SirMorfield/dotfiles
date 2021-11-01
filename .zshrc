@@ -2,20 +2,6 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=30
 
 # Uncomment the following line if pasting URLs and other text is messed up.
@@ -32,31 +18,24 @@ export UPDATE_ZSH_DAYS=30
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
+# set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 HIST_STAMPS="dd/mm/yyyy"
+
+ZSH_TMUX_AUTOSTART=true
 
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-ZSH_TMUX_AUTOSTART=true
-
 plugins=(zsh-autosuggestions tmux)
 
 source $ZSH/oh-my-zsh.sh
-
-# User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nano'
   export VISUAL='nano'
@@ -64,8 +43,6 @@ else
   export EDITOR='nano'
   export VISUAL='nano'
 fi
-
-# alias
 
 unalias -a
 
@@ -114,12 +91,7 @@ if [ "$(uname -s)" = "Linux" ]; then
   export BAT_PAGER="less -RF"
 fi
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# PATH stuff
-
+## PATH stuff
 export PATH="$PATH:$HOME/.local/bin"
 # export PATH="/usr/share/swift/5.3.2/usr/bin:$PATH"
 
@@ -140,28 +112,16 @@ fi
 # Only ignore duplicate terminal commands, save the ones prefixed with whitespace
 export HISTCONTROL=ignoredups
 
-
-# function preexec() {
-#   timer=$(($(date +%s%0N)/1000000))
-# }
-
-# function precmd() {
-#   if [ $timer ]; then
-#     now=$(($(date +%s%0N)/1000000))
-#     elapsed=$(($now-$timer))
-
-#     export RPROMPT="%F{cyan}${elapsed}ms %{$reset_color%}"
-#     unset timer
-#   fi
-# }
+function preexec() {}
+function precmd() {}
 
 # allow * matcing in terminal
 setopt no_bare_glob_qual
 
-# disable rm * conformation
+# disable rm * conformation prompt
 setopt rmstarsilent
 
-### Fix slowness of pastes (meant for zsh-syntax-highlighting.zsh but still works)
+# Fix slowness of pastes (meant for zsh-syntax-highlighting.zsh but still works)
 pasteinit() {
   OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
   zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
