@@ -26,7 +26,7 @@ else
 fi
 
 if [ "$1" = "push" ]; then
-	sh -c "rsync --archive --human-readbale -P --one-file-system --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ --links -e $sshcmd $HOME $server:/home/joppe/sync/$host/"
+	sh -c "rsync --archive --human-readable -P --one-file-system --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ --links -e $sshcmd $HOME $server:/home/joppe/sync/$host/"
 else
 	echo "pull not implemented"
 fi
