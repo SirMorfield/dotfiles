@@ -8,7 +8,7 @@ fi
 if [ $(curl -s ifconfig.me) == "80.61.192.39" ]; then
 	sshcmd="'ssh'"
 	server="joppe@192.168.2.1"
-else	
+else
 	sshcmd="'ssh -p 10001'"
 	server="joppe@joppekoers.nl"
 fi
@@ -20,13 +20,13 @@ else
 fi
 
 if [ "$2" == "all" ]; then
-	dir="$HOME/Downloads $HOME/Desktop $HOME/GitHub"
+	dir=$(find $HOME -maxdepth 1 -not -name .cache -printf "%p ")
 else
 	dir=$2
 fi
 
 if [ "$1" = "push" ]; then
-	sh -c "rsync -ahP --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ --links -e $sshcmd $dir $server:/home/joppe/sync/$host/"
+	sh -c "rsync --archive --human-readbale -P --one-file-system --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ --links -e $sshcmd $HOME $server:/home/joppe/sync/$host/"
 else
 	echo "pull not implemented"
 fi
