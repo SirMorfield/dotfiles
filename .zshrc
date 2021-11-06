@@ -24,6 +24,16 @@ HIST_STAMPS="dd/mm/yyyy"
 
 ZSH_TMUX_AUTOSTART=true
 
+# add brew to PATH
+if [ "$(uname -s)" = "Darwin" ]; then
+  export PATH=/opt/homebrew/bin:$PATH
+fi
+
+if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then # if codam mac
+  export PATH="$PATH:$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  export PATH=$PATH:$HOME/.brew/bin
+fi
+
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -101,11 +111,6 @@ export PATH="$PATH:$HOME/.local/bin"
 # export PATH=$PATH:$ANDROID_HOME/tools/bin
 # export PATH=$PATH:$ANDROID_HOME/platform-tools
 # export REACT_EDITOR=vscode
-
-if [ "$(uname -s)" = "Darwin" ]; then
-  export PATH="$PATH:$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-  export PATH=$PATH:$HOME/.brew/bin
-fi
 
 # OTHER
 
