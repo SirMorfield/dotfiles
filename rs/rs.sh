@@ -15,18 +15,24 @@ fi
 
 if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then
 	host="codam"
+elif [ $(hostname) == "joppes-mbp.home" ]; then
+	host="macbook-pro"
 else
 	host=$(hostname)
 fi
 
 if [ "$2" == "all" ]; then
-	dir=$(cd $HOME && find . -maxdepth 1 -not -name .cache | tr '\n' ' ')
+	dir=$(cd $HOME && find . -maxdepth 1 \
+		-not -name .cache \
+		-not -name .DS_store \
+		-not -name Library \
+		| tr '\n' ' ')
 else
 	dir=$2
 fi
 
 if [ "$1" = "push" ]; then
-	sh -c "rsync --archive --human-readable -P --one-file-system --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ --links -e $sshcmd $HOME $server:/home/joppe/sync/$host/"
+	sh -c "rsync --archive --human-readable -P --one-file-system --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ --links -e $sshcmd $dir $server:/home/joppe/sync/$host/"
 else
 	echo "pull not implemented"
 fi
