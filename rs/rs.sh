@@ -27,6 +27,7 @@ if [ "$2" == "all" ]; then
 		-not -name '.cache' \
 		-not -name '.DS_Store' \
 		-not -name 'Library' \
+		-not -name 'server1' \
 		-exec echo "'{}'" \; \
 		| tr '\n' ' ')
 else
@@ -34,7 +35,7 @@ else
 fi
 
 if [ "$1" = "push" ]; then
-	sh -c "rsync --archive --copy-links --human-readable -P --one-file-system --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ --links -e $sshcmd $dir $server:/home/joppe/sync/$host/"
+	sh -c "rsync --archive --no-links --human-readable -P --one-file-system --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ -e $sshcmd $dir $server:/home/joppe/sync/$host/"
 else
 	echo "pull not implemented"
 fi
