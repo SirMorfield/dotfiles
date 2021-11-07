@@ -23,16 +23,18 @@ fi
 
 if [ "$2" == "all" ]; then
 	dir=$(cd $HOME && find . -maxdepth 1 \
-		-not -name .cache \
-		-not -name .DS_store \
-		-not -name Library \
+		-not -name '.' \
+		-not -name '.cache' \
+		-not -name '.DS_Store' \
+		-not -name 'Library' \
+		-exec echo "'{}'" \; \
 		| tr '\n' ' ')
 else
 	dir=$2
 fi
 
 if [ "$1" = "push" ]; then
-	sh -c "rsync --archive --human-readable -P --one-file-system --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ --links -e $sshcmd $dir $server:/home/joppe/sync/$host/"
+	sh -c "rsync --archive --copy-links --human-readable -P --one-file-system --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ --links -e $sshcmd $dir $server:/home/joppe/sync/$host/"
 else
 	echo "pull not implemented"
 fi
