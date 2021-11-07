@@ -28,6 +28,7 @@ if [ "$2" == "all" ]; then
 		-not -name '.DS_Store' \
 		-not -name 'Library' \
 		-not -name 'server1' \
+		-not -name '.ssh' \
 		-exec echo "'{}'" \; \
 		| tr '\n' ' ')
 else
