@@ -20,7 +20,7 @@ else
 fi
 
 if [ "$2" == "all" ]; then
-	dir=$(find $HOME -maxdepth 1 -not -name .cache -printf "%p ")
+	dir=$(cd $HOME && find . -maxdepth 1 -not -name .cache | tr '\n' ' ')
 else
 	dir=$2
 fi
