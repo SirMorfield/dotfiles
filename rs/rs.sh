@@ -29,6 +29,7 @@ if [ "$2" == "all" ]; then
 		-not -name 'Library' \
 		-not -name 'server1' \
 		-not -name '.ssh' \
+		-not -name 'Applications' \
 		-exec echo "'{}'" \; \
 		| tr '\n' ' ')
 else
@@ -36,6 +37,7 @@ else
 fi
 
 if [ "$1" = "push" ]; then
+	cd $HOME
 	sh -c "rsync --archive --no-links --human-readable -P --one-file-system --delete-after --delete-excluded --backup-dir ../$(echo $host)_deleted/ -e $sshcmd $dir $server:/home/joppe/sync/$host/"
 else
 	echo "pull not implemented"
