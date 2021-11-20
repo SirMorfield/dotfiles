@@ -15,7 +15,7 @@ fi
 
 if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then
 	host="codam"
-elif [ $(hostname) == "joppes-mbp.home" ]; then
+elif [[ $(hostname) == "joppes-mbp.home" ]] || [[ $(hostname) == "macbook-pro.home" ]]; then
 	host="macbook-pro"
 else
 	host=$(hostname)
