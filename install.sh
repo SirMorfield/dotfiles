@@ -7,6 +7,7 @@
 
 sudo apt install -y zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+rm -f ~/.zshrc
 ln -s ~/.dotfiles/.zshrc ~
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ln -s ~/.dotfiles/.tmux.conf ~
