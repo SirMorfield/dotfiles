@@ -22,7 +22,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # see 'man strftime' for details.
 HIST_STAMPS="dd/mm/yyyy"
 
-ZSH_TMUX_AUTOSTART=true
+# ZSH_TMUX_AUTOSTART=true
 
 # add brew to PATH
 if [ "$(uname -s)" = "Darwin" ]; then
@@ -41,6 +41,7 @@ plugins=(zsh-autosuggestions tmux)
 
 source $ZSH/oh-my-zsh.sh
 
+export PROMPT='%{$fg[green]%}%m%}%{$fg_bold[cyan]%} ➜ %c $(git_prompt_info)%{$reset_color%}'
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
