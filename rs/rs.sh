@@ -30,6 +30,11 @@ if [ "$2" == "all" ]; then
 		-not -name 'server1' \
 		-not -name '.ssh' \
 		-not -name 'Applications' \
+		-not -name 'Music' \
+		-not -name 'Movies' \
+		-not -name 'Pictures' \
+		-not -name 'My Drive' \
+		-not -name 'Documents' \
 		-exec echo "'{}'" \; \
 		| tr '\n' ' ')
 else
