@@ -26,15 +26,15 @@ if [ "$2" == "all" ]; then
 		-not -name '.' \
 		-not -name '.cache' \
 		-not -name '.DS_Store' \
-		-not -name 'Library' \
-		-not -name 'server1' \
 		-not -name '.ssh' \
 		-not -name 'Applications' \
-		-not -name 'Music' \
-		-not -name 'Movies' \
-		-not -name 'Pictures' \
-		-not -name 'My Drive' \
 		-not -name 'Documents' \
+		-not -name 'Library' \
+		-not -name 'Movies' \
+		-not -name 'Music' \
+		-not -name 'My Drive' \
+		-not -name 'Pictures' \
+		-not -name 'server1' \
 		-exec echo "'{}'" \; \
 		| tr '\n' ' ')
 else
