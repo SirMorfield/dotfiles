@@ -35,6 +35,9 @@ if [ "$2" == "all" ]; then
 		-not -name 'My Drive' \
 		-not -name 'Pictures' \
 		-not -name 'server1' \
+		-not -name '.brew' \
+		-not -name '.npm' \
+		-not -name '.platformio' \
 		-exec echo "'{}'" \; \
 		| tr '\n' ' ')
 else

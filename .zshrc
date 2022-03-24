@@ -2,6 +2,20 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=30
 
 # Uncomment the following line if pasting URLs and other text is messed up.
@@ -18,35 +32,36 @@ export UPDATE_ZSH_DAYS=30
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# set a custom format using the strftime function format specifications,
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 HIST_STAMPS="dd/mm/yyyy"
-
-# ZSH_TMUX_AUTOSTART=true
-
-# add brew to PATH
-if [ "$(uname -s)" = "Darwin" ]; then
-  export PATH=/opt/homebrew/bin:$PATH
-fi
-
-if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then # if codam mac
-  export PATH="$PATH:$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-  export PATH=$PATH:$HOME/.brew/bin
-fi
 
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(zsh-autosuggestions tmux)
+# ZSH_TMUX_AUTOSTART=true
+
+plugins=(zsh-autosuggestions)
+
+if [ "$(uname -s)" = "Darwin" ]; then
+  export PATH="$PATH:$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  export PATH=$PATH:$HOME/.brew/bin
+fi
 
 source $ZSH/oh-my-zsh.sh
 
-export PROMPT='%{$fg[green]%}%m%}%{$fg_bold[cyan]%} ➜ %c $(git_prompt_info)%{$reset_color%}'
+# User configuration
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
+# Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nano'
   export VISUAL='nano'
@@ -54,6 +69,8 @@ else
   export EDITOR='nano'
   export VISUAL='nano'
 fi
+
+# alias
 
 unalias -a
 
@@ -63,7 +80,7 @@ else
   alias ls="ls -G"
 fi
 alias rcp="rsync -ah --info=progress2"
-alias l="ls -Ahlk"
+alias l="ls -Ahok"
 
 alias ssh1="ssh joppe@192.168.2.1"
 alias sshp1="ssh -p 10001 joppe@joppekoers.nl"
@@ -73,6 +90,11 @@ alias sshfsp1="sshfs -o follow_symlinks -p 10001 joppe@joppekoers.nl: $HOME/serv
 alias ope="xdg-open"
 alias leak="valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --track-origins=yes"
 alias clip="xclip -selection c"
+
+alias ..2="cd ../../"
+alias ..3="cd ../../../"
+alias ..4="cd ../../../../"
+alias ..5="cd ../../../../../"
 
 # alias netstat="netstat -tulpn | grep :"
 
@@ -102,7 +124,12 @@ if [ "$(uname -s)" = "Linux" ]; then
   export BAT_PAGER="less -RF"
 fi
 
-## PATH stuff
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# PATH stuff
+
 export PATH="$PATH:$HOME/.local/bin"
 # export PATH="/usr/share/swift/5.3.2/usr/bin:$PATH"
 
@@ -118,16 +145,28 @@ export PATH="$PATH:$HOME/.local/bin"
 # Only ignore duplicate terminal commands, save the ones prefixed with whitespace
 export HISTCONTROL=ignoredups
 
-function preexec() {}
-function precmd() {}
+
+# function preexec() {
+#   timer=$(($(date +%s%0N)/1000000))
+# }
+
+# function precmd() {
+#   if [ $timer ]; then
+#     now=$(($(date +%s%0N)/1000000))
+#     elapsed=$(($now-$timer))
+
+#     export RPROMPT="%F{cyan}${elapsed}ms %{$reset_color%}"
+#     unset timer
+#   fi
+# }
 
 # allow * matcing in terminal
 setopt no_bare_glob_qual
 
-# disable rm * conformation prompt
+# disable rm * conformation
 setopt rmstarsilent
 
-# Fix slowness of pastes (meant for zsh-syntax-highlighting.zsh but still works)
+### Fix slowness of pastes (meant for zsh-syntax-highlighting.zsh but still works)
 pasteinit() {
   OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
   zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
@@ -142,3 +181,4 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 if [ -f /etc/zsh.cnf ]; then
  . /etc/zsh.cnf
 fi
+alias cclean='bash ~/Cleaner_42.sh'
