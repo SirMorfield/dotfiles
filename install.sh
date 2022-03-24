@@ -33,5 +33,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	mkdir -p ~/.local/bin
 	ln -s /usr/bin/batcat ~/.local/bin/bat
 else
-	brew install bat
+	mkdir -p ~/.local/bin/
+	cd /tmp/
+	wget https://github.com/sharkdp/bat/releases/download/v0.20.0/bat-v0.20.0-x86_64-apple-darwin.tar.gz
+	tar -xf bat-v0.20.0-x86_64-apple-darwin.tar.gz --strip-components bat-v0.20.0-x86_64-apple-darwin/bat
+	mv  bat-v0.20.0-x86_64-apple-darwin/bat ~/.local/bin/
+	rm -rf bat-v0.20.0-x86_64-apple-darwin*
+	cd -
 fi
