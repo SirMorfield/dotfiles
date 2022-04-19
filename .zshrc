@@ -2,64 +2,27 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=30
 
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
+# set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 HIST_STAMPS="dd/mm/yyyy"
 
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# ZSH_TMUX_AUTOSTART=true
 
 plugins=(zsh-autosuggestions)
 
 if [ "$(uname -s)" = "Darwin" ]; then
+  export PATH=/opt/homebrew/bin:$PATH
+fi
+
+if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then # if codam mac
   export PATH="$PATH:$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   export PATH=$PATH:$HOME/.brew/bin
 fi
 
 source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -69,8 +32,6 @@ else
   export EDITOR='nano'
   export VISUAL='nano'
 fi
-
-# alias
 
 unalias -a
 
@@ -90,11 +51,6 @@ alias sshfsp1="sshfs -o follow_symlinks -p 10001 joppe@joppekoers.nl: $HOME/serv
 alias ope="xdg-open"
 alias leak="valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --track-origins=yes"
 alias clip="xclip -selection c"
-
-alias ..2="cd ../../"
-alias ..3="cd ../../../"
-alias ..4="cd ../../../../"
-alias ..5="cd ../../../../../"
 
 # alias netstat="netstat -tulpn | grep :"
 
@@ -124,49 +80,21 @@ if [ "$(uname -s)" = "Linux" ]; then
   export BAT_PAGER="less -RF"
 fi
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# PATH stuff
-
 export PATH="$PATH:$HOME/.local/bin"
-# export PATH="/usr/share/swift/5.3.2/usr/bin:$PATH"
-
-# export ANDROID_HOME=$HOME/.Android/Sdk
-# export PATH=$PATH:$ANDROID_HOME/emulator
-# export PATH=$PATH:$ANDROID_HOME/tools
-# export PATH=$PATH:$ANDROID_HOME/tools/bin
-# export PATH=$PATH:$ANDROID_HOME/platform-tools
-# export REACT_EDITOR=vscode
-
-# OTHER
 
 # Only ignore duplicate terminal commands, save the ones prefixed with whitespace
 export HISTCONTROL=ignoredups
 
-
-# function preexec() {
-#   timer=$(($(date +%s%0N)/1000000))
-# }
-
-# function precmd() {
-#   if [ $timer ]; then
-#     now=$(($(date +%s%0N)/1000000))
-#     elapsed=$(($now-$timer))
-
-#     export RPROMPT="%F{cyan}${elapsed}ms %{$reset_color%}"
-#     unset timer
-#   fi
-# }
+function preexec() {}
+function precmd() {}
 
 # allow * matcing in terminal
 setopt no_bare_glob_qual
 
-# disable rm * conformation
+# disable rm * conformation prompt
 setopt rmstarsilent
 
-### Fix slowness of pastes (meant for zsh-syntax-highlighting.zsh but still works)
+# Fix slowness of pastes (meant for zsh-syntax-highlighting.zsh but still works)
 pasteinit() {
   OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
   zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
@@ -181,4 +109,3 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 if [ -f /etc/zsh.cnf ]; then
  . /etc/zsh.cnf
 fi
-alias cclean='bash ~/Cleaner_42.sh'
