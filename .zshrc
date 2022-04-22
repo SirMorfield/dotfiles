@@ -17,9 +17,18 @@ if [ "$(uname -s)" = "Darwin" ]; then
   export PATH=/opt/homebrew/bin:$PATH
 fi
 
-if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then # if codam mac
+# if codam mac
+if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then 
   export PATH="$PATH:$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   export PATH=$PATH:$HOME/.brew/bin
+
+  mkdir -p /sgoinfre/jkoers
+  chown jkoers /sgoinfre/jkoers
+
+  # save docker images on goinfre
+  mkdir -p $HOME/goinfre/Library/Containers/com.docker.docker
+  rm -rf $HOME/Library/Containers/com.docker.docker
+  ln -s $HOME/goinfre/Library/Containers/com.docker.docker $HOME/Library/Containers/com.docker.docker
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -41,7 +50,7 @@ else
   alias ls="ls -G"
 fi
 alias rcp="rsync -ah --info=progress2"
-alias l="ls -Ahok"
+alias l="ls -Ahlk"
 
 alias ssh1="ssh joppe@192.168.2.1"
 alias sshp1="ssh -p 10001 joppe@joppekoers.nl"
