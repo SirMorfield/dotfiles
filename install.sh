@@ -27,7 +27,7 @@ rm -f ~/.tmux.conf
 ln -s ~/.dotfiles/.tmux.conf ~
 
 rm -f ~/.ssh/config
-ln -s ~/.dotfiles/.ssh/config .ssh/
+ln -s ~/.dotfiles/.ssh/config ~/.ssh/
 
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
