@@ -19,7 +19,10 @@ else
 	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 fi
 
+rm -rf ~/.oh-my-zsh
+rm -f ~/.zshrc
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 rm -f ~/.zshrc
 ln -s ~/.dotfiles/.zshrc ~
 
