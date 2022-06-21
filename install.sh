@@ -50,3 +50,6 @@ else
 	rm -rf bat-v0.20.0-x86_64-apple-darwin*
 	cd -
 fi
+
+git config --global user.name "SirMorfield"
+git config --global user.email "joppe.koers@gmail.com"
