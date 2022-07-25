@@ -10,15 +10,15 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # see 'man strftime' for details.
 HIST_STAMPS="dd/mm/yyyy"
 
-
-plugins=(zsh-autosuggestions)
+# ZSH_TMUX_AUTOSTART=true
+plugins=(zsh-autosuggestions docker docker-compose tmux)
 
 if [ "$(uname -s)" = "Darwin" ]; then
   export PATH=/opt/homebrew/bin:$PATH
 fi
 
 # if codam mac
-if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then 
+if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then
   export PATH="$PATH:$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   export PATH=$PATH:$HOME/.brew/bin
 
