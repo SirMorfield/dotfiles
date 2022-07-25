@@ -19,7 +19,10 @@ else
 	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 fi
 
+rm -rf ~/.oh-my-zsh
+rm -f ~/.zshrc
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 rm -f ~/.zshrc
 ln -s ~/.dotfiles/.zshrc ~
 
@@ -27,7 +30,7 @@ rm -f ~/.tmux.conf
 ln -s ~/.dotfiles/.tmux.conf ~
 
 rm -f ~/.ssh/config
-ln -s ~/.dotfiles/.ssh/config .ssh/
+ln -s ~/.dotfiles/.ssh/config ~/.ssh/
 
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
@@ -47,3 +50,6 @@ else
 	rm -rf bat-v0.20.0-x86_64-apple-darwin*
 	cd -
 fi
+
+git config --global user.name "SirMorfield"
+git config --global user.email "joppe.koers@gmail.com"
