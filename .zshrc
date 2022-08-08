@@ -83,10 +83,12 @@ function mkcd { mkdir "$1" && cd "$1"; }
 export mkcd
 
 function profile {
-  valgrind -q --tool=callgrind --callgrind-out-file=/tmp/callgrind.out $@
-  gprof2dot --format=callgrind --output=/tmp/out.dot /tmp/callgrind.out
-  dot -Gdpi=400 -Tpng /tmp/out.dot -o profile.png
-  rm -f /tmp/out.dot
+	TMP=$(mktemp -d)
+	valgrind -q --tool=callgrind --callgrind-out-file=$TMP/callgrind.out $@
+	gprof2dot --format=callgrind --output=$TMP/out.dot $TMP/callgrind.out
+	dot -Gdpi=400 -Tpng $TMP/out.dot -o profile.png
+	dot -Tsvg $TMP/out.dot -o profile.svg
+	rm -f $TMP/out.dot
 }
 
 function copyGit {
@@ -128,3 +130,10 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 if [ -f /etc/zsh.cnf ]; then
  . /etc/zsh.cnf
 fi
+
+# bun completions
+[ -s "/Users/joppe/.bun/_bun" ] && source "/Users/joppe/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/Users/joppe/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
