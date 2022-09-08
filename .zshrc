@@ -100,6 +100,10 @@ if [ "$(uname -s)" = "Linux" ]; then
   export BAT_PAGER="less -RF"
 fi
 
+# Disable brew update before every package install
+# Manually update with: `brew update`
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 export PATH="$PATH:$HOME/.local/bin"
 
 # Only ignore duplicate terminal commands, save the ones prefixed with whitespace
