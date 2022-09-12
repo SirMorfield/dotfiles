@@ -68,7 +68,7 @@ alias sshfsp1="sshfs -o follow_symlinks -p 10001 joppe@joppekoers.nl: $HOME/serv
 alias ope="xdg-open"
 alias leak="valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --track-origins=yes"
 alias clip="xclip -selection c"
-alias notes="code $HOME/GitHub/notes"
+alias notes="code $HOME/git/notes"
 
 # alias netstat="netstat -tulpn | grep :"
 
