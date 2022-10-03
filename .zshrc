@@ -15,6 +15,7 @@ plugins=(zsh-autosuggestions docker docker-compose tmux)
 
 if [ "$(uname -s)" = "Darwin" ]; then
   export PATH=/opt/homebrew/bin:$PATH
+  export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
 # if codam mac
