@@ -44,14 +44,9 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nano'
-  export VISUAL='nano'
-else
-  export EDITOR='nano'
-  export VISUAL='nano'
-fi
+# Set preferred editor
+export EDITOR='vim'
+export VISUAL='vim'
 
 unalias -a
 
