@@ -14,8 +14,31 @@ HIST_STAMPS="dd/mm/yyyy"
 plugins=(zsh-autosuggestions docker docker-compose tmux)
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  export PATH=/opt/homebrew/bin:$PATH
+  export PATH="$PATH:/opt/homebrew/bin"
   export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+fi
+
+# if Q42 work laptop
+if [ "$(hostname)" = "qlaptop" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+
+  # set npm secret
+  if [ -f "$HOME/.npmrc" ]; then
+	export NPM_TOKEN=$(sed -n -e 's/^.*Token=//p' $HOME/.npmrc)
+  fi
+
+  export GPG_TTY=$(tty) # gpg signing git
+
+  # inport secrets
+  [ -f $HOME/.dotfiles/q42-secrets.sh ] && source $HOME/.dotfiles/q42-secrets.sh
+
+  # Google Cloud SDK
+  if [ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/path.zsh.inc"; fi
+  if [ -f "$HOME/.google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/completion.zsh.inc"; fi
+
+  alias hue="node $HOME/git/Hue/tools/hue-cli/dist/index.js"
 fi
 
 # if codam mac
@@ -125,14 +148,16 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
+# disable escaping characters in url / url-quote-magic
+zstyle :urlglobber url-other-schema
+
+# Fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if [ -f /etc/zsh.cnf ]; then
  . /etc/zsh.cnf
 fi
 
-# bun completions
-[ -s "/Users/joppe/.bun/_bun" ] && source "/Users/joppe/.bun/_bun"
-
 # Bun
+[ -s "/Users/joppe/.bun/_bun" ] && source "/Users/joppe/.bun/_bun"
 export BUN_INSTALL="/Users/joppe/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"

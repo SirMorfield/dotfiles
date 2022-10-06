@@ -51,5 +51,9 @@ else
 	cd -
 fi
 
-git config --global user.name "SirMorfield"
+git config --global user.name "Joppe Koers"
 git config --global user.email "joppe.koers@gmail.com"
+git config --global submodule.recurse true
+
+# Add all github hosts
+ssh-keyscan github.com >> ~/.ssh/known_hosts
