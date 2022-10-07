@@ -55,5 +55,8 @@ git config --global user.name "Joppe Koers"
 git config --global user.email "joppe.koers@gmail.com"
 git config --global submodule.recurse true
 
+# disable the "To push the current branch and set the remote as upstream, use ..."
+git config --global --add --bool push.autoSetupRemote true
+
 # Add all github hosts
 ssh-keyscan github.com >> ~/.ssh/known_hosts
