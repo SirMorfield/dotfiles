@@ -32,6 +32,10 @@ ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 export EDITOR='vim'
 export VISUAL='vim'
 
+# Fix language error in perl and others
+export LANGUAGE="$LANG"
+export LC_ALL="$LANG"
+
 # if mac
 if [ "$(uname -s)" = "Darwin" ]; then
   export PATH="/opt/homebrew/bin:$PATH" # give priorty to brew packages
