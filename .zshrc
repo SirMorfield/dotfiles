@@ -58,7 +58,7 @@ if [ "$(hostname)" = "qlaptop" ]; then
   if [ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/path.zsh.inc"; fi
   if [ -f "$HOME/.google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/completion.zsh.inc"; fi
 
-  alias hue="node $HOME/git/Hue/tools/hue-cli/dist/index.js"
+  alias hue="node $HOME/q/Hue/tools/hue-cli/dist/index.js"
 fi
 
 # if codam mac
