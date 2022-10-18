@@ -45,54 +45,54 @@ function add_path() {
 
 # if mac
 if [ "$(uname -s)" = "Darwin" ]; then
-  add_path "/opt/homebrew/bin"
-  add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+	add_path "/opt/homebrew/bin"
+	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
 # if Q42 work laptop
 if [ "$(hostname)" = "qlaptop" ]; then
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+	[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 
-  # set npm secret
-  if [ -f "$HOME/.npmrc" ]; then
-	export NPM_TOKEN=$(sed -n -e 's/^.*Token=//p' $HOME/.npmrc)
-  fi
+	# set npm secret
+	if [ -f "$HOME/.npmrc" ]; then
+		export NPM_TOKEN=$(sed -n -e 's/^.*Token=//p' $HOME/.npmrc)
+	fi
 
-  export GPG_TTY=$(tty) # gpg signing git
+	export GPG_TTY=$(tty) # gpg signing git
 
-  # import secrets
-  [ -f $HOME/.dotfiles/q42-secrets.sh ] && source $HOME/.dotfiles/q42-secrets.sh
+	# import secrets
+	[ -f $HOME/.dotfiles/q42-secrets.sh ] && source $HOME/.dotfiles/q42-secrets.sh
 
-  # Google Cloud SDK
-  if [ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/path.zsh.inc"; fi
-  if [ -f "$HOME/.google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/completion.zsh.inc"; fi
+	# Google Cloud SDK
+	if [ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/path.zsh.inc"; fi
+	if [ -f "$HOME/.google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/completion.zsh.inc"; fi
 
-  alias hue="node $HOME/q/Hue/tools/hue-cli/dist/index.js"
+	alias hue="node $HOME/q/Hue/tools/hue-cli/dist/index.js"
 fi
 
 # if codam mac
 if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then
-  add_path "$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-  add_path "$HOME/.brew/bin"
+	add_path "$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+	add_path "$HOME/.brew/bin"
 
-  mkdir -p /sgoinfre/jkoers
-  chown jkoers /sgoinfre/jkoers
+	mkdir -p /sgoinfre/jkoers
+	chown jkoers /sgoinfre/jkoers
 
-  # save docker images on goinfre
-  mkdir -p $HOME/goinfre/Library/Containers/com.docker.docker
-  rm -rf $HOME/Library/Containers/com.docker.docker
-  ln -s $HOME/goinfre/Library/Containers/com.docker.docker $HOME/Library/Containers/com.docker.docker
+	# save docker images on goinfre
+	mkdir -p $HOME/goinfre/Library/Containers/com.docker.docker
+	rm -rf $HOME/Library/Containers/com.docker.docker
+	ln -s $HOME/goinfre/Library/Containers/com.docker.docker $HOME/Library/Containers/com.docker.docker
 fi
 
 # Aliases
 if [ "$(uname -s)" = "Linux" ]; then
-  alias ls="ls --color=auto"
-  alias clip="xclip -selection c"
-  alias ope="xdg-open"
+	alias ls="ls --color=auto"
+	alias clip="xclip -selection c"
+	alias ope="xdg-open"
 else
-  alias ls="ls -G"
+	alias ls="ls -G"
 fi
 alias rcp="rsync -ah --info=progress2"
 alias l="ls -Ahlk"
@@ -106,13 +106,19 @@ alias notes="code $HOME/git/notes"
 
 # alias netstat="netstat -tulpn | grep :"
 
-function drop { curl -X POST -F "upfile=@$1" https://joppekoers.nl/drop/upload -F "identifier=$2"; }
+function drop {
+	curl -X POST -F "upfile=@$1" https://joppekoers.nl/drop/upload -F "identifier=$2";
+}
 export drop
 
-function droplocal { curl -X POST -F "upfile=@$1" http://localhost:8080/drop/upload -F "identifier=$2"; }
+function droplocal {
+	curl -X POST -F "upfile=@$1" http://localhost:8080/drop/upload -F "identifier=$2";
+}
 export droplocal
 
-function mkcd { mkdir "$1" && cd "$1"; }
+function mkcd {
+	mkdir "$1" && cd "$1";
+}
 export mkcd
 
 function profile {
@@ -125,13 +131,13 @@ function profile {
 }
 
 function copyGit {
-  find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
+	find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
 }
 
 # batcat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 if [ "$(uname -s)" = "Linux" ]; then
-  export BAT_PAGER="less -RF"
+	export BAT_PAGER="less -RF"
 fi
 
 # Disable brew update before every package install
@@ -154,11 +160,11 @@ setopt rmstarsilent
 
 # Fix slowness of pastes (meant for zsh-syntax-highlighting.zsh but still works)
 pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+	OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+	zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
 }
 pastefinish() {
-  zle -N self-insert $OLD_SELF_INSERT
+	zle -N self-insert $OLD_SELF_INSERT
 }
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
@@ -169,7 +175,7 @@ zstyle :urlglobber url-other-schema
 # Fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if [ -f /etc/zsh.cnf ]; then
- . /etc/zsh.cnf
+	. /etc/zsh.cnf
 fi
 
 # Bun
