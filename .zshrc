@@ -36,10 +36,17 @@ export VISUAL='vim'
 export LANGUAGE="$LANG"
 export LC_ALL="$LANG"
 
+# De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
+export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}')
+
+function add_path() {
+	[ -d "$1" ] && export PATH="$1:$PATH"
+}
+
 # if mac
 if [ "$(uname -s)" = "Darwin" ]; then
-  export PATH="/opt/homebrew/bin:$PATH" # give priorty to brew packages
-  export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  add_path "/opt/homebrew/bin"
+  add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
 # if Q42 work laptop
@@ -67,8 +74,8 @@ fi
 
 # if codam mac
 if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then
-  export PATH="$PATH:$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-  export PATH=$PATH:$HOME/.brew/bin
+  add_path "$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  add_path "$HOME/.brew/bin"
 
   mkdir -p /sgoinfre/jkoers
   chown jkoers /sgoinfre/jkoers
@@ -131,7 +138,7 @@ fi
 # Manually update with: `brew update`
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-export PATH="$PATH:$HOME/.local/bin"
+add_path "$HOME/.local/bin"
 
 # Only ignore duplicate terminal commands, save the ones prefixed with whitespace
 export HISTCONTROL=ignoredups
@@ -168,4 +175,4 @@ fi
 # Bun
 [ -s "/Users/joppe/.bun/_bun" ] && source "/Users/joppe/.bun/_bun"
 export BUN_INSTALL="/Users/joppe/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+add_path "$BUN_INSTALL/bin"
