@@ -181,6 +181,6 @@ if [ -f /etc/zsh.cnf ]; then
 fi
 
 # Bun
-[ -s "/Users/joppe/.bun/_bun" ] && source "/Users/joppe/.bun/_bun"
-export BUN_INSTALL="/Users/joppe/.bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+export BUN_INSTALL="$HOME/.bun"
 add_path "$BUN_INSTALL/bin"
