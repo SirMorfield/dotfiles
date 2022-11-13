@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# git config --global user.name ""
-# git config --global user.email ""
+# move to current directory, so execution is always relative to this file
+cd "${0%/*}"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	sudo apt install -y zsh git
@@ -20,17 +20,19 @@ else
 fi
 
 rm -rf ~/.oh-my-zsh
-rm -f ~/.zshrc
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 rm -f ~/.zshrc
-ln -s ~/.dotfiles/.zshrc ~
+ln -s "$PWD/.zshrc" ~
 
 rm -f ~/.tmux.conf
-ln -s ~/.dotfiles/.tmux.conf ~
+ln -s "$PWD/.tmux.conf" ~
 
 rm -f ~/.ssh/config
-ln -s ~/.dotfiles/.ssh/config ~/.ssh/
+ln -s "$PWD/.ssh/config" ~/.ssh/
+
+rm 0 ~/.gitconfig
+ln -s "$PWD/.gitconfig" ~
 
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
@@ -50,13 +52,6 @@ else
 	rm -rf bat-v0.20.0-x86_64-apple-darwin*
 	cd -
 fi
-
-git config --global user.name "Joppe Koers"
-git config --global user.email "joppe.koers@gmail.com"
-git config --global submodule.recurse true
-
-# disable the "To push the current branch and set the remote as upstream, use ..."
-git config --global --add --bool push.autoSetupRemote true
 
 # Add all github hosts
 ssh-keyscan github.com >> ~/.ssh/known_hosts
