@@ -32,7 +32,7 @@ rm -f ~/.ssh/config
 ln -s "$PWD/.ssh/config" ~/.ssh/
 
 rm 0 ~/.gitconfig
-ln -s "$PWD/.gitconfig" ~
+ln -s "$PWD/gitconfig/.gitconfig" ~
 
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
