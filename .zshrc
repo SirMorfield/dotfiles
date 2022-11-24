@@ -136,6 +136,16 @@ function copyGit {
 	find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
 }
 
+# This rsync remove is way faster than rm -r
+function rrm {
+	emptydir=$(mktemp -d)
+	for dir in "$@"; do
+		rsync -a --delete $emptydir/ "$dir"
+		rm -rf "$dir"
+	done
+	rm -rf $emptydir
+}
+
 # batcat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 if [ "$(uname -s)" = "Linux" ]; then
