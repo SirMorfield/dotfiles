@@ -1,3 +1,7 @@
+[includeIf "gitdir:~/server1/"]
+	path = ~/git/dotfiles/gitconfig/.gitconfig-joppe
+
+
 [includeIf "gitdir:~/q/"]
 	path = ~/git/dotfiles/gitconfig/.gitconfig-q42
 
