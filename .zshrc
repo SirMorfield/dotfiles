@@ -20,7 +20,7 @@ unalias -a
 
 # PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )" # default
 PROMPT='%{$fg[green]%}%n@%m%}%{$fg[white]%}:%{$fg_bold[cyan]%}'
-PROMPT+='%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)
+PROMPT+='%{$fg[cyan]%}${(%):-%~}%{$reset_color%} $(git_prompt_info)
 %(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )%{$reset_color%}' # MAYBE use $ insead of ➜
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
