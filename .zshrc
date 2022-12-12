@@ -63,7 +63,7 @@ if [ "$(hostname)" = "qlaptop" ]; then
 	export GPG_TTY=$(tty) # gpg signing git
 
 	# import secrets
-	[ -f $HOME/.dotfiles/q42-secrets.sh ] && source $HOME/.dotfiles/q42-secrets.sh
+	[ -f $HOME/git/dotfiles/q42-secrets.sh ] && source $HOME/git/dotfiles/q42-secrets.sh
 
 	# Google Cloud SDK
 	if [ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/path.zsh.inc"; fi
