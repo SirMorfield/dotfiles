@@ -43,6 +43,21 @@ function add_path() {
 	[ -d "$1" ] && export PATH="$1:$PATH"
 }
 
+# source file if it exists and is not empty (-s)
+function source_if_exists() {
+	[ -s "$1" ] && source "$1"
+}
+
+# run file if it exists and is not empty (-s)
+function run_if_exists() {
+	[ -s "$1" ] && . "$1"
+}
+
+ROOT="$HOME/git/dotfiles"
+if [ ! -d "$ROOT" ]; then
+	echo "FATAL: dotfiles not found at $ROOT"
+fi
+
 # if mac
 if [ "$(uname -s)" = "Darwin" ]; then
 	add_path "/opt/homebrew/bin"
@@ -52,26 +67,29 @@ fi
 # if Q42 work laptop
 if [ "$(hostname)" = "qlaptop" ]; then
 	export NVM_DIR="$HOME/.nvm"
-	[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-	[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+	run_if_exists "/opt/homebrew/opt/nvm/nvm.sh"
+	run_if_exists "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 
 	# set npm secret
 	if [ -f "$HOME/.npmrc" ]; then
 		export NPM_TOKEN=$(sed -n -e 's/^.*Token=//p' $HOME/.npmrc)
 	fi
 
-	export GPG_TTY=$(tty) # gpg signing git
+	# gpg signing git
+	export GPG_TTY=$(tty)
 
 	# import secrets
-	[ -f $HOME/git/dotfiles/q42-secrets.sh ] && source $HOME/git/dotfiles/q42-secrets.sh
+	source_if_exists $ROOT/q42-secrets.sh
 
 	# Google Cloud SDK
-	if [ -f "$HOME/.google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/path.zsh.inc"; fi
-	if [ -f "$HOME/.google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/.google-cloud-sdk/completion.zsh.inc"; fi
+	run_if_exists "$HOME/.google-cloud-sdk/path.zsh.inc"
+	run_if_exists "$HOME/.google-cloud-sdk/completion.zsh.inc"
 
 	alias hue="node $HOME/q/Hue/tools/hue-cli/dist/index.js"
 
 	export GOPATH="$HOME/.go"
+
+	source_if_exists ~/.config/op/plugins.sh
 fi
 
 # if codam mac
@@ -185,12 +203,10 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 zstyle :urlglobber url-other-schema
 
 # Fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-if [ -f /etc/zsh.cnf ]; then
-	. /etc/zsh.cnf
-fi
+source_if_exists ~/.fzf.zsh
+run_if_exists /etc/zsh.cnf
 
 # Bun
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+source_if_exists "$HOME/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 add_path "$BUN_INSTALL/bin"
