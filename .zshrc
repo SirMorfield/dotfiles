@@ -53,6 +53,12 @@ function run_if_exists() {
 	[ -s "$1" ] && . "$1"
 }
 
+function log_and_run() {
+	echo "$@"
+	echo
+	eval "$@"
+}
+
 ROOT="$HOME/git/dotfiles"
 if [ ! -d "$ROOT" ]; then
 	echo "FATAL: dotfiles not found at $ROOT"
@@ -163,6 +169,10 @@ function rrm {
 		rm -rf "$dir"
 	done
 	rm -rf $emptydir
+}
+
+function gitam {
+	log_and_run "git add $@ && git commit --amend --no-edit"
 }
 
 # batcat
