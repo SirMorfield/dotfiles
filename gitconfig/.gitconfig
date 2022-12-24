@@ -12,10 +12,15 @@
 	name = Joppe Koers
 
 	# https://stackoverflow.com/questions/48065535/should-i-keep-gitconfigs-signingkey-private
-	signingkey = E907498FF2EB794019BF5F2B428A406260AC0EA8
+	signingkey = 0C0377D01C665928
 
-[gpg]
-	program = /opt/homebrew/bin/gpg
+# set gpg path for darwin
+[includeIf "gitdir:/Users/"]
+	path = ~/git/dotfiles/gitconfig/.gitconfig-darwin
+
+# set gpg path for darwin
+[includeIf "gitdir:/home/"]
+	path = ~/git/dotfiles/gitconfig/.gitconfig-linux
 
 [commit]
 	gpgsign = true
