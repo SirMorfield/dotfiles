@@ -181,6 +181,10 @@ function gam {
 	log_and_run "git add $@ && git commit --amend --no-edit"
 }
 
+function drs {
+	log_and_run "docker stop $1; docker start $1; docker logs -f -n 10000 $1"
+}
+
 # batcat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 if [ "$(uname -s)" = "Linux" ]; then
