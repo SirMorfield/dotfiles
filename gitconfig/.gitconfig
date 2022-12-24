@@ -23,7 +23,7 @@
 	path = ~/git/dotfiles/gitconfig/.gitconfig-linux
 
 [commit]
-	gpgsign = true
+	gpgsign = false
 
 [submodule]
 	# recurse = true
