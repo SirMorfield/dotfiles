@@ -157,7 +157,7 @@ function profile {
 	rm -f $TMP/out.dot
 }
 
-function copyGit {
+function copygit {
 	find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
 }
 
