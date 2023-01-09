@@ -178,11 +178,16 @@ function loop {
 }
 
 function gam {
+	log_and_run "git --no-pager diff --stat HEAD -- $@"
 	log_and_run "git add $@ && git commit --amend --no-edit"
 }
 
 function drs {
 	log_and_run "docker stop $1; docker start $1; docker logs -f -n 10000 $1"
+}
+
+function dps {
+	docker container list --no-trunc --format "table {{.Names}}\t{{.Status}}\t{{.Command}}\t{{.Ports}}"
 }
 
 # batcat
