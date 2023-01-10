@@ -187,7 +187,7 @@ function drs {
 }
 
 function dps {
-	docker container list --no-trunc --format "table {{.Names}}\t{{.Status}}\t{{.Command}}\t{{.Ports}}"
+	log_and_run 'docker container list --no-trunc --format "table {{.Names}}\\t{{.Status}}\\t{{.Command}}\\t{{.Ports}}"'
 }
 
 # batcat
