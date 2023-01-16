@@ -64,8 +64,11 @@ if [ ! -d "$ROOT" ]; then
 	echo "FATAL: dotfiles not found at $ROOT"
 fi
 
-# if mac
 if [ "$(uname -s)" = "Darwin" ]; then
+	# Disable brew update before every package install
+	# Manually update with: `brew update`
+	export HOMEBREW_NO_AUTO_UPDATE=1
+
 	add_path "/opt/homebrew/bin"
 	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
@@ -195,10 +198,6 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 if [ "$(uname -s)" = "Linux" ]; then
 	export BAT_PAGER="less -RF"
 fi
-
-# Disable brew update before every package install
-# Manually update with: `brew update`
-export HOMEBREW_NO_AUTO_UPDATE=1
 
 add_path "$HOME/.local/bin"
 
