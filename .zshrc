@@ -11,7 +11,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd/mm/yyyy"
 
 # ZSH_TMUX_AUTOSTART=true
-plugins=(zsh-autosuggestions docker docker-compose tmux)
+plugins=(zsh-autosuggestions docker docker-compose tmux z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -133,6 +133,9 @@ alias leak="valgrind --leak-check=full --show-leak-kinds=definite,indirect,possi
 
 alias notes="code $HOME/git/notes"
 alias dc="docker compose"
+
+# quick navigator: https://github.com/agkozak/zsh-z
+alias z='zshz 2>&1'
 
 # alias netstat="netstat -tulpn | grep :"
 
