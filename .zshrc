@@ -137,22 +137,31 @@ alias dc="docker compose"
 # quick navigator: https://github.com/agkozak/zsh-z
 alias z='zshz 2>&1'
 
+# GIT aliases
+alias gf='git fetch --all --prune'
+alias gch='git checkout'
+alias gcm='git commit -m'
+
+
+# VSCode aliases
+alias c="code"
+function cz {
+	log_and_run code $(z -e "$1")
+}
+
 # alias netstat="netstat -tulpn | grep :"
 
 function drop {
-	curl -X POST -F "upfile=@$1" https://joppekoers.nl/drop/upload -F "identifier=$2";
+	log_and_run curl -X POST -F "upfile=@$1" https://joppekoers.nl/drop/upload -F "identifier=$2";
 }
-export drop
 
 function droplocal {
-	curl -X POST -F "upfile=@$1" http://localhost:8080/drop/upload -F "identifier=$2";
+	log_and_run curl -X POST -F "upfile=@$1" http://localhost:8080/drop/upload -F "identifier=$2";
 }
-export droplocal
 
 function mkcd {
-	mkdir "$1" && cd "$1";
+	log_and_run mkdir "$1" && cd "$1";
 }
-export mkcd
 
 function profile {
 	TMP=$(mktemp -d)
@@ -164,7 +173,7 @@ function profile {
 }
 
 function copygit {
-	find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
+	log_and_run find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
 }
 
 # This rsync remove is way faster than rm -r
@@ -238,3 +247,7 @@ run_if_exists /etc/zsh.cnf
 source_if_exists "$HOME/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 add_path "$BUN_INSTALL/bin"
+
+# Volta
+export VOLTA_HOME="$HOME/.volta"
+add_path "$VOLTA_HOME/bin"
