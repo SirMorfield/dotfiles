@@ -141,6 +141,13 @@ alias z='zshz 2>&1'
 alias gf='git fetch --all --prune'
 alias gch='git checkout'
 alias gcm='git commit -m'
+function gam {
+	log_and_run "git --no-pager diff --stat HEAD -- $@"
+	log_and_run "git add $@ && git commit --amend --no-edit"
+}
+function copygit {
+	log_and_run find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
+}
 
 
 # VSCode aliases
@@ -172,10 +179,6 @@ function profile {
 	rm -f $TMP/out.dot
 }
 
-function copygit {
-	log_and_run find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
-}
-
 # This rsync remove is way faster than rm -r
 function rrm {
 	emptydir=$(mktemp -d)
@@ -192,10 +195,6 @@ function loop {
 	done
 }
 
-function gam {
-	log_and_run "git --no-pager diff --stat HEAD -- $@"
-	log_and_run "git add $@ && git commit --amend --no-edit"
-}
 
 function drs {
 	log_and_run "docker stop $1; docker start $1; docker logs -f -n 10000 $1"
