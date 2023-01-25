@@ -39,6 +39,9 @@ export LC_ALL="$LANG"
 # De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
 export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}')
 
+RESET='\e[0m'
+PURPLE='\e[0;35m'
+
 function add_path() {
 	[ -d "$1" ] && export PATH="$1:$PATH"
 }
@@ -54,7 +57,7 @@ function run_if_exists() {
 }
 
 function log_and_run() {
-	echo "$@"
+	echo $PURPLE$@$RESET
 	echo
 	eval "$@"
 }
