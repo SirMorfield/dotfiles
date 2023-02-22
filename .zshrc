@@ -123,6 +123,7 @@ if [ "$(uname -s)" = "Linux" ]; then
 	alias ls="ls --color=auto"
 	alias clip="xclip -selection c"
 	alias ope="xdg-open"
+	export SYSTEMD_EDITOR=vim
 else
 	alias ls="ls -G"
 fi
@@ -208,7 +209,6 @@ function loop {
 		$@
 	done
 }
-
 
 function drs {
 	log_and_run "docker stop $1; docker start $1; docker logs -f -n 10000 $1"
