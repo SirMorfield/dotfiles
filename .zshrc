@@ -151,7 +151,18 @@ function gam {
 function copygit {
 	log_and_run find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
 }
+function ghrename {
+	if [ $# -ne 1 ]; then
+		echo "Renames local branch and push to remote"
+		echo "Usage: ghrename <new_branch_name>"
+		return 1
+	fi
+	oldbranch=$(git rev-parse --abbrev-ref HEAD)
 
+	git branch -m $1					# Rename branch locally
+	git push origin :$oldbranch			# Delete the old branch
+	git push --set-upstream origin $1	# Push the new branch, set local branch to track the new remote
+}
 
 # VSCode aliases
 alias c="code"
