@@ -171,6 +171,9 @@ function cz {
 	log_and_run code $(z -e "$1")
 }
 
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
 # alias netstat="netstat -tulpn | grep :"
 
 function drop {
