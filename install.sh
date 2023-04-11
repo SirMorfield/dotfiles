@@ -3,55 +3,68 @@
 # move to current directory, so execution is always relative to this file
 cd "${0%/*}"
 
+function forceln {
+	# if destination is file and exists, remove it
+	if [ -f "$2" ]; then
+		rm -f "$2"
+	fi
+
+	FILENAME=$(basename $1)
+	if [ -f "$2/$FILENAME" ]; then
+		rm -f "$2/$FILENAME"
+	fi
+	ln -s $1 $2
+}
+
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	sudo apt install -y zsh git
 else
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	# fix permissions
-	# sudo chown -R $(whoami):admin /usr/local/share/zsh /usr/local/share/zsh/site-functions
-	# sudo chown -R $(whoami):admin /usr/local/var/homebrew
-	# sudo chown -R $(whoami):admin /usr/local/Homebrew
-	# sudo chown -R $(whoami):admin /usr/local/share
-	# sudo chown -R $(whoami):admin /usr/local/opt
-	# sudo chown -R $(whoami):admin /usr/local/bin
 	brew install zsh git
-
 	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 fi
 
 rm -rf ~/.oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-rm -f ~/.zshrc
-ln -s "$PWD/.zshrc" ~
+forceln "$PWD/.zshrc" ~
+forceln "$PWD/.tmux.conf" ~
+forceln "$PWD/.ssh/config" ~/.ssh/
+forceln "$PWD/gitconfig/.gitconfig" ~
 
-rm -f ~/.tmux.conf
-ln -s "$PWD/.tmux.conf" ~
+ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
-rm -f ~/.ssh/config
-ln -s "$PWD/.ssh/config" ~/.ssh/
+P="$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+rm -rf "$P"
+git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions $P
 
-rm 0 ~/.gitconfig
-ln -s "$PWD/gitconfig/.gitconfig" ~
-
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
+rm -rf ~/.fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 yes | ~/.fzf/install
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	sudo apt install -y bat
 	mkdir -p ~/.local/bin
-	ln -s /usr/bin/batcat ~/.local/bin/bat
+	forceln /usr/bin/batcat ~/.local/bin/bat
 else
+	V=0.23.0
 	mkdir -p ~/.local/bin/
 	cd /tmp/
-	curl -L https://github.com/sharkdp/bat/releases/download/v0.20.0/bat-v0.20.0-x86_64-apple-darwin.tar.gz -o bat-v0.20.0-x86_64-apple-darwin.tar.gz
-	tar -xf bat-v0.20.0-x86_64-apple-darwin.tar.gz
-	mv  bat-v0.20.0-x86_64-apple-darwin/bat ~/.local/bin/
-	rm -rf bat-v0.20.0-x86_64-apple-darwin*
+	curl -L https://github.com/sharkdp/bat/releases/download/v$V/bat-v$V-x86_64-apple-darwin.tar.gz -o bat-v$V-x86_64-apple-darwin.tar.gz
+	tar -xf bat-v$V-x86_64-apple-darwin.tar.gz
+	mv  bat-v$V-x86_64-apple-darwin/bat ~/.local/bin/
+	rm -rf bat-v$V-x86_64-apple-darwin*
 	cd -
 fi
 
 # Add all github hosts
 ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+# De duplicate lines
+sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
+
+
+echo ====================
+echo Done
+echo Reopen terminal to see changes
+echo ====================
