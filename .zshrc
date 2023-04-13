@@ -76,37 +76,9 @@ if [ "$(uname -s)" = "Darwin" ]; then
 	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
-# if Q42 work laptop
-if [ "$(hostname)" = "qlaptop" ]; then
-	export NVM_DIR="$HOME/.nvm"
-	run_if_exists "/opt/homebrew/opt/nvm/nvm.sh"
-	run_if_exists "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
-
-	# set npm secret
-	if [ -f "$HOME/.npmrc" ]; then
-		export NPM_TOKEN=$(sed -n -e 's/^.*Token=//p' $HOME/.npmrc)
-	fi
-
-	# gpg signing git
-	export GPG_TTY=$(tty)
-
-	# import secrets
-	source_if_exists $ROOT/q42-secrets.sh
-
-	# Google Cloud SDK
-	run_if_exists "$HOME/.google-cloud-sdk/path.zsh.inc"
-	run_if_exists "$HOME/.google-cloud-sdk/completion.zsh.inc"
-
-	alias hue="node $HOME/q/Hue/tools/hue-cli/dist/index.js"
-
-	export GOPATH="$HOME/.go"
-
-	source_if_exists ~/.config/op/plugins.sh
-fi
-
 # if codam mac
 if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then
-	add_path "$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 	add_path "$HOME/.brew/bin"
 
 	mkdir -p /sgoinfre/jkoers
