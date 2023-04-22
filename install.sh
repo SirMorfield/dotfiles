@@ -13,6 +13,8 @@ function forceln {
 	if [ -f "$2/$FILENAME" ]; then
 		rm -f "$2/$FILENAME"
 	fi
+
+	echo "Linking $1 to $2"
 	ln -s $1 $2
 }
 
@@ -29,8 +31,14 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 forceln "$PWD/.zshrc" ~
 forceln "$PWD/.tmux.conf" ~
-forceln "$PWD/.ssh/config" ~/.ssh/
+forceln "$PWD/.ssh/config" ~/.ssh
 forceln "$PWD/gitconfig/.gitconfig" ~
+
+# Add all github hosts
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+# De duplicate lines
+sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
 
 ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
@@ -56,13 +64,6 @@ else
 	rm -rf bat-v$V-x86_64-apple-darwin*
 	cd -
 fi
-
-# Add all github hosts
-ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-# De duplicate lines
-sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
-
 
 echo ====================
 echo Done
