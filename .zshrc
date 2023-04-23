@@ -11,7 +11,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd/mm/yyyy"
 
 # ZSH_TMUX_AUTOSTART=true
-plugins=(zsh-autosuggestions docker docker-compose z)
+plugins=(zsh-autosuggestions docker docker-compose z fzf-zsh-plugin)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -223,10 +223,6 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # disable escaping characters in url / url-quote-magic
 zstyle :urlglobber url-other-schema
-
-# Fzf
-source_if_exists ~/.fzf.zsh
-run_if_exists /etc/zsh.cnf
 
 # Bun
 source_if_exists "$HOME/.bun/_bun"

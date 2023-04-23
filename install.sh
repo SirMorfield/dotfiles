@@ -46,9 +46,9 @@ P="$ZSH_CUSTOM/plugins/zsh-autosuggestions"
 rm -rf "$P"
 git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions $P
 
-rm -rf ~/.fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-yes | ~/.fzf/install
+P="$ZSH_CUSTOM/plugins/fzf-zsh-plugin"
+rm -rf "$P"
+git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git $P
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	sudo apt install -y bat
