@@ -36,9 +36,6 @@ export VISUAL='vim'
 export LANGUAGE="$LANG"
 export LC_ALL="$LANG"
 
-# De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
-export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}')
-
 RESET='\e[0m'
 PURPLE='\e[0;35m'
 
@@ -239,3 +236,6 @@ add_path "$BUN_INSTALL/bin"
 # Volta
 export VOLTA_HOME="$HOME/.volta"
 add_path "$VOLTA_HOME/bin"
+
+# De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
+export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}' | sed 's/:$//')
