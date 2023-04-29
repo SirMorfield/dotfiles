@@ -233,5 +233,13 @@ add_path "$BUN_INSTALL/bin"
 export VOLTA_HOME="$HOME/.volta"
 add_path "$VOLTA_HOME/bin"
 
+# pnpm
+if [ "$(uname -s)" = "Linux" ]; then
+	export PNPM_HOME="$HOME/.pnpm-global"
+else
+	export PNPM_HOME="$HOME/Library/pnpm"
+fi
+add_path "$PNPM_HOME"
+
 # De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
 export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}' | sed 's/:$//')
