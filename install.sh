@@ -50,6 +50,10 @@ P="$ZSH_CUSTOM/plugins/fzf-zsh-plugin"
 rm -rf "$P"
 git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git $P
 
+P="$ZSH_CUSTOM/plugins/cmdtime"
+rm -rf "$P"
+git clone --depth 1 https://github.com/tom-auger/cmdtime $P
+
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	sudo apt install -y bat
 	mkdir -p ~/.local/bin

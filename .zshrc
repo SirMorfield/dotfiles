@@ -11,7 +11,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd/mm/yyyy"
 
 # ZSH_TMUX_AUTOSTART=true
-plugins=(zsh-autosuggestions docker docker-compose z fzf-zsh-plugin)
+plugins=(cmdtime zsh-autosuggestions docker docker-compose z fzf-zsh-plugin)
 
 source $ZSH/oh-my-zsh.sh
 
