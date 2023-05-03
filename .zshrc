@@ -73,18 +73,27 @@ if [ "$(uname -s)" = "Darwin" ]; then
 	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
+#
+function ensure_link() {
+	if [ ! -L "$2" ]; then
+		rm -rf "$2"
+		mkdir -p "$(dirname "$2")"
+		ln -s "$1" "$2"
+	fi
+}
+
 # if codam mac
 if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then
 	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 	add_path "$HOME/.brew/bin"
 
-	mkdir -p /sgoinfre/jkoers
-	chown jkoers /sgoinfre/jkoers
+	STORE="/sgoinfre/jkoers"
+	mkdir -p $STORE
+	chown jkoers $STORE
+	chmod 700 $STORE
 
-	# save docker images on goinfre
-	mkdir -p $HOME/goinfre/Library/Containers/com.docker.docker
-	rm -rf $HOME/Library/Containers/com.docker.docker
-	ln -s $HOME/goinfre/Library/Containers/com.docker.docker $HOME/Library/Containers/com.docker.docker
+	ensure_link $STORE/Library/Containers/com.docker.docker $HOME/Library/Containers/com.docker.docker
+	ensure_link $STORE/.npm/_cacache $HOME/.npm/_cacache
 fi
 
 # Aliases
