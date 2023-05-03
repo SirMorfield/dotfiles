@@ -22,8 +22,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	sudo apt install -y zsh git
 else
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	brew install zsh git
-	defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
+	brew install zsh git fzf
+	# defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 fi
 
 rm -rf ~/.oh-my-zsh
