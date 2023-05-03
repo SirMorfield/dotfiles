@@ -61,12 +61,13 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 else
 	V=0.23.0
 	mkdir -p ~/.local/bin/
-	cd /tmp/
-	curl -L https://github.com/sharkdp/bat/releases/download/v$V/bat-v$V-x86_64-apple-darwin.tar.gz -o bat-v$V-x86_64-apple-darwin.tar.gz
-	tar -xf bat-v$V-x86_64-apple-darwin.tar.gz
-	mv  bat-v$V-x86_64-apple-darwin/bat ~/.local/bin/
-	rm -rf bat-v$V-x86_64-apple-darwin*
-	cd -
+	(
+		cd /tmp/
+		curl -L https://github.com/sharkdp/bat/releases/download/v$V/bat-v$V-x86_64-apple-darwin.tar.gz -o bat-v$V-x86_64-apple-darwin.tar.gz
+		tar -xf bat-v$V-x86_64-apple-darwin.tar.gz
+		mv  bat-v$V-x86_64-apple-darwin/bat ~/.local/bin/
+		rm -rf bat-v$V-x86_64-apple-darwin*
+	)
 fi
 
 echo ====================
