@@ -22,7 +22,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	sudo apt install -y zsh git
 else
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	brew install zsh git fzf
+	brew install zsh git
 	# defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 fi
 
@@ -49,6 +49,9 @@ git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions $P
 P="$ZSH_CUSTOM/plugins/fzf-zsh-plugin"
 rm -rf "$P"
 git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git $P
+
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
 P="$ZSH_CUSTOM/plugins/cmdtime"
 rm -rf "$P"
