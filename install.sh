@@ -27,7 +27,7 @@ else
 fi
 
 rm -rf ~/.oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 forceln "$PWD/.zshrc" ~
 forceln "$PWD/.tmux.conf" ~
