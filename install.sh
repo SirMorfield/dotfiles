@@ -9,9 +9,9 @@ function forceln {
 		rm -f "$2"
 	fi
 
-	FILENAME=$(basename $1)
-	if [ -f "$2/$FILENAME" ]; then
-		rm -f "$2/$FILENAME"
+	DESTINATION="$2/$(basename $1)"
+	if [ -f "$DESTINATION" ]; then
+		rm -f "$DESTINATION"
 	fi
 
 	echo "Linking $1 to $2"
