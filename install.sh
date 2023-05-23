@@ -34,9 +34,11 @@ forceln "$PWD/.tmux.conf" ~
 forceln "$PWD/.ssh/config" ~/.ssh
 forceln "$PWD/gitconfig/.gitconfig" ~
 
+[ ! -f .zsh_history ] && touch .zsh_history
+forceln "$PWD/.zsh_history" ~
+
 # Add all github hosts
 ssh-keyscan github.com >> ~/.ssh/known_hosts
-
 # De duplicate lines
 sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
 
