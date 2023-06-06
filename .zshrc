@@ -106,7 +106,7 @@ else
 	alias ls="ls -G"
 fi
 alias rcp="rsync -ah --info=progress2"
-alias l="ls -Ahlk" # TODO -h not working on OSX?
+alias l="ls -Ahl"
 
 alias sshfs1="sshfs -o follow_symlinks joppe@192.168.2.1: $HOME/server1/"
 alias sshfsp1="sshfs -o follow_symlinks -p 10001 joppe@joppekoers.nl: $HOME/server1/"
