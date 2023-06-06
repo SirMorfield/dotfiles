@@ -124,6 +124,11 @@ alias gf='git fetch --all --prune'
 alias gch='git checkout'
 alias gcm='git commit -m'
 function gam {
+	if [ $# -eq 0 ]; then
+		echo "Usage: gam <files>"
+		return
+	fi
+
 	log_and_run "git --no-pager diff --stat HEAD -- $@"
 	log_and_run "git add $@ && git commit --amend --no-edit"
 }
@@ -152,6 +157,8 @@ function cz {
 alias ..2="cd ../.."
 alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+alias ..6="cd ../../../../../.."
 # alias netstat="netstat -tulpn | grep :"
 
 function drop {
