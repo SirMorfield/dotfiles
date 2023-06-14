@@ -73,7 +73,6 @@ if [ "$(uname -s)" = "Darwin" ]; then
 	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
-#
 function ensure_link() {
 	if [ ! -L "$2" ]; then
 		rm -rf "$2"
@@ -162,11 +161,12 @@ alias ..6="cd ../../../../../.."
 # alias netstat="netstat -tulpn | grep :"
 
 function drop {
-	log_and_run curl -X POST -F "upfile=@$1" https://joppekoers.nl/drop/upload -F "identifier=$2";
-}
+	if [ $# -ne 1 ]; then
+		echo "Usage: drop <file>"
+		return 1
+	fi
 
-function droplocal {
-	log_and_run curl -X POST -F "upfile=@$1" http://localhost:8080/drop/upload -F "identifier=$2";
+	log_and_run curl -X POST -F "file=@$1" https://joppekoers.nl/drop/up
 }
 
 function mkcd {
