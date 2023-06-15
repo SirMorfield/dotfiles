@@ -174,6 +174,11 @@ function mkcd {
 }
 
 function profile {
+	if [ $# -ne 1 ]; then
+		echo "Usage: profile <program>"
+		return 1
+	fi
+
 	TMP=$(mktemp -d)
 	valgrind -q --tool=callgrind --callgrind-out-file=$TMP/callgrind.out $@
 	gprof2dot --format=callgrind --output=$TMP/out.dot $TMP/callgrind.out
