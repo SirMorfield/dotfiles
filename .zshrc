@@ -118,7 +118,7 @@ alias dc="docker compose"
 # quick navigator: https://github.com/agkozak/zsh-z
 alias z='zshz 2>&1'
 
-# GIT aliases
+# GIT aliases and functions
 alias gf='git fetch --all --prune'
 alias gch='git checkout'
 alias gcm='git commit -m'
@@ -134,7 +134,7 @@ function gam {
 function copygit {
 	log_and_run find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
 }
-function ghrename {
+function grename {
 	if [ $# -ne 1 ]; then
 		echo "Renames local branch and push to remote"
 		echo "Usage: ghrename <new_branch_name>"
@@ -145,6 +145,35 @@ function ghrename {
 	git branch -m $1					# Rename branch locally
 	git push origin :$oldbranch			# Delete the old branch
 	git push --set-upstream origin $1	# Push the new branch, set local branch to track the new remote
+}
+function gpullall() {
+	function git_branch_exists() {
+		git show-ref --verify --quiet "refs/heads/$1"
+	}
+
+	branches=$(git branch -r | grep -v '\->' | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g")
+	for branch in $branches; do
+		length=${#branch}
+		if git_branch_exists "${branch#origin/}"; then
+			continue
+		fi
+		if ((length > max_length)); then
+			max_length=$length
+		fi
+	done
+
+	for branch in $branches; do
+		if git_branch_exists "${branch#origin/}"; then
+			continue
+		fi
+		padding_length=$((max_length - ${#branch}))
+		padding=$(printf '%*s' $padding_length)
+		git branch --track "${branch#origin/}" "$branch"
+		echo $branch$padding created
+	done
+
+	git fetch --all
+	git pull --all
 }
 
 # VSCode aliases
