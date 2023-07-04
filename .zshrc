@@ -128,8 +128,12 @@ function gam {
 		return
 	fi
 
-	log_and_run "git --no-pager diff --stat HEAD -- $@"
-	log_and_run "git add $@ && git commit --amend --no-edit"
+	echo $PURPLEgit --no-pager diff --stat HEAD -- $@$RESET
+	for file in $@; do
+		git --no-pager diff --stat HEAD -- "$file"
+		git add "$file"
+	done
+	log_and_run "git commit --amend --no-edit"
 }
 function copygit {
 	log_and_run find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
