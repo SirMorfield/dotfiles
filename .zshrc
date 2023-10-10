@@ -92,20 +92,6 @@ function ensure_link() {
 	fi
 }
 
-# if codam mac
-if [[ $(hostname) == *".codam.nl"* ]] && [[ $(whoami) == "jkoers" ]]; then
-	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-	add_path "$HOME/.brew/bin"
-
-	STORE="/sgoinfre/jkoers"
-	mkdir -p $STORE
-	chown jkoers $STORE
-	chmod 700 $STORE
-
-	ensure_link $STORE/Library/Containers/com.docker.docker $HOME/Library/Containers/com.docker.docker
-	ensure_link $STORE/.npm/_cacache $HOME/.npm/_cacache
-fi
-
 # Aliases
 if [ "$(uname -s)" = "Linux" ]; then
 	alias ls="ls --color=auto"
