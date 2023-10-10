@@ -19,7 +19,16 @@ source $ZSH/oh-my-zsh.sh
 unalias -a
 
 # PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )" # default
-PROMPT='%{$fg[green]%}%n@%m%}%{$fg[white]%}:%{$fg_bold[cyan]%}'
+prompt_color=red
+case $(hostname -s) in
+laptop)
+    prompt_color='green'    # green(46) on black(16)
+    ;;
+server*)
+    prompt_color='red'   # red(196) on black(16)
+    ;;
+esac
+PROMPT='%{$fg[${prompt_color}]%}%n@%m%}%{$fg[white]%}:%{$fg_bold[cyan]%}'
 PROMPT+='%{$fg[cyan]%}${(%):-%~}%{$reset_color%} $(git_prompt_info)
 %(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )%{$reset_color%}' # MAYBE use $ insead of ➜
 
