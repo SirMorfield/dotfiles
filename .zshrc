@@ -70,6 +70,8 @@ if [ "$(uname -s)" = "Darwin" ]; then
 	export HOMEBREW_NO_AUTO_UPDATE=1
 
 	add_path "/opt/homebrew/bin"
+	# add_path "/usr/local/bin"
+	add_path "/opt/homebrew/opt/postgresql@15/bin"
 	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
@@ -122,15 +124,16 @@ alias z='zshz 2>&1'
 alias gf='git fetch --all --prune'
 alias gch='git checkout'
 alias gcm='git commit -m'
+function gs {
+	log_and_run git stash --include-untracked
+}
 function gam {
 	if [ $# -eq 0 ]; then
 		echo "Usage: gam <files>"
 		return
 	fi
-
-	echo $PURPLEgit --no-pager diff --stat HEAD -- $@$RESET
 	for file in $@; do
-		git --no-pager diff --stat HEAD -- "$file"
+		git --no-pager diff --stat HEAD -- "$file" | head -n -1
 		git add "$file"
 	done
 	log_and_run "git commit --amend --no-edit"
@@ -284,8 +287,11 @@ export BUN_INSTALL="$HOME/.bun"
 add_path "$BUN_INSTALL/bin"
 
 # Volta
-export VOLTA_HOME="$HOME/.volta"
-add_path "$VOLTA_HOME/bin"
+# export VOLTA_HOME="$HOME/.volta"
+# add_path "$VOLTA_HOME/bin"
+
+# npm
+add_path "$HOME/.npm-global/bin"
 
 # pnpm
 if [ "$(uname -s)" = "Linux" ]; then
