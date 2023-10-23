@@ -299,5 +299,8 @@ add_path "$PNPM_HOME"
 # fzf
 source_if_exists "$HOME/.fzf.zsh"
 
+# dotnet
+add_path /usr/local/share/dotnet/dotnet
+
 # De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
 export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}' | sed 's/:$//')
