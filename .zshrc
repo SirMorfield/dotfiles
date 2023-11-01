@@ -11,25 +11,36 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd/mm/yyyy"
 
 # ZSH_TMUX_AUTOSTART=true
-plugins=(cmdtime zsh-autosuggestions docker docker-compose z fzf-zsh-plugin)
+plugins=(cmdtime zsh-autosuggestions docker docker-compose z fzf-zsh-plugin kube-ps1)
 
 source $ZSH/oh-my-zsh.sh
 
 # remove all aliases set by system and oh-my-zsh
 unalias -a
 
+# kube-ps config
+KUBE_PS1_SYMBOL_ENABLE=false
+KUBE_PS1_PREFIX=
+KUBE_PS1_SUFFIX=
+# KUBE_PS1_NS_ENABLE=false
+function kube_ps1_wrapped() {
+	if [[ "$PWD" == *"celebratix"* ]]; then
+		kube_ps1
+	fi
+}
+
 # PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )" # default
 prompt_color=red
 case $(hostname -s) in
 laptop)
-    prompt_color='green'    # green(46) on black(16)
+    prompt_color='green'
     ;;
 server*)
-    prompt_color='red'   # red(196) on black(16)
+    prompt_color='red'
     ;;
 esac
 PROMPT='%{$fg[${prompt_color}]%}%n@%m%}%{$fg[white]%}:%{$fg_bold[cyan]%}'
-PROMPT+='%{$fg[cyan]%}${(%):-%~}%{$reset_color%} $(git_prompt_info)
+PROMPT+='%{$fg[cyan]%}${(%):-%~}%{$reset_color%} $(git_prompt_info)$(kube_ps1_wrapped)
 %(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )%{$reset_color%}' # MAYBE use $ insead of ➜
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
@@ -122,16 +133,19 @@ alias gcm='git commit -m'
 function gs {
 	log_and_run git stash --include-untracked
 }
+function gp {
+	log_and_run git stash pop
+}
 function gam {
 	if [ $# -eq 0 ]; then
 		echo "Usage: gam <files>"
 		return
 	fi
 	for file in $@; do
-		git --no-pager diff --stat HEAD -- "$file" | head -n -1
+		git --no-pager diff --stat HEAD -- "$file"
 		git add "$file"
 	done
-	log_and_run "git commit --amend --no-edit"
+	git commit --amend --no-edit > /dev/null
 }
 function copygit {
 	log_and_run find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
