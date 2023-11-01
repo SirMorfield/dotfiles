@@ -301,6 +301,7 @@ source_if_exists "$HOME/.fzf.zsh"
 
 # dotnet
 add_path /usr/local/share/dotnet/dotnet
+add_path .dotnet/tools
 
 # android
 export ANDROID_HOME=$HOME/Library/Android/sdk
