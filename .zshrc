@@ -322,6 +322,9 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 add_path "$ANDROID_HOME/emulator"
 add_path "$ANDROID_HOME/platform-tools"
 
+# Java
+if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+add_path "$HOME/.jenv/shims"
 
 # De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
 export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}' | sed 's/:$//')
