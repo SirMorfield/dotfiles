@@ -112,7 +112,7 @@ if [ "$(uname -s)" = "Linux" ]; then
 else
 	alias ls="ls -G"
 fi
-alias rcp="rsync -ah --info=progress2"
+alias rcp="rsync -ah --progress"
 alias l="ls -Ahl"
 
 alias sshfs1="sshfs -o follow_symlinks joppe@192.168.2.1: $HOME/server1/"
@@ -315,7 +315,9 @@ source_if_exists "$HOME/.fzf.zsh"
 
 # dotnet
 add_path /usr/local/share/dotnet/dotnet
-add_path .dotnet/tools
+add_path "$HOME/.dotnet/tools"
+add_path ".vscode-dotnet-sdk/.dotnet"
+export DOTNET_ROOT=$HOME/.vscode-dotnet-sdk/.dotnet/dotnet
 
 # android
 export ANDROID_HOME=$HOME/Library/Android/sdk
