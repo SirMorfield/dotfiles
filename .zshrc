@@ -130,6 +130,7 @@ alias z='zshz 2>&1'
 alias gf='git fetch --all --prune'
 alias gch='git checkout'
 alias gcm='git commit -m'
+alias gclean="git checkout . && git clean -fd"
 function gs {
 	log_and_run git stash --include-untracked
 }
