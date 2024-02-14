@@ -1,0 +1,5 @@
+[gpg]
+	program = /opt/homebrew/bin/gpg
+
+[user]
+	signingKey = /Users/joppe/.ssh/id_ed25519.pub

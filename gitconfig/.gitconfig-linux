@@ -1,2 +1,5 @@
 [gpg]
 	program = /usr/bin/gpg
+
+[user]
+	signingKey = /home/joppe/.ssh/id_ed25519.pub
