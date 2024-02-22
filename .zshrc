@@ -87,7 +87,7 @@ fi
 if [ "$(uname -s)" = "Darwin" ]; then
 	# Disable brew update before every package install
 	# Manually update with: `brew update`
-	export HOMEBREW_NO_AUTO_UPDATE=1
+	# export HOMEBREW_NO_AUTO_UPDATE=1
 
 	add_path "/opt/homebrew/bin"
 	# add_path "/usr/local/bin"
@@ -194,7 +194,7 @@ function gpullall() {
 }
 
 # VSCode aliases
-alias c="code"
+alias c="code ."
 function cz {
 	log_and_run code $(z -e "$1")
 }
@@ -328,6 +328,7 @@ add_path "$ANDROID_HOME/platform-tools"
 # Java
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 add_path "$HOME/.jenv/shims"
+add_path "/opt/homebrew/opt/openjdk@17/bin"
 
 # De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
 export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}' | sed 's/:$//')
