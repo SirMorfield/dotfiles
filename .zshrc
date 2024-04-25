@@ -137,7 +137,7 @@ function gs {
 function gp {
 	log_and_run git stash pop
 }
-function gam {
+function gam { # git ammend all files
 	if [ $# -eq 0 ]; then
 		echo "Usage: gam <files>"
 		return
@@ -151,7 +151,7 @@ function gam {
 function copygit {
 	log_and_run find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
 }
-function grename {
+function grename { # git rename branch locally and remotely
 	if [ $# -ne 1 ]; then
 		echo "Renames local branch and push to remote"
 		echo "Usage: ghrename <new_branch_name>"
@@ -163,7 +163,7 @@ function grename {
 	git push origin :$oldbranch			# Delete the old branch
 	git push --set-upstream origin $1	# Push the new branch, set local branch to track the new remote
 }
-function gpullall() {
+function gpullall() { # git pull all remote branches
 	function git_branch_exists() {
 		git show-ref --verify --quiet "refs/heads/$1"
 	}
@@ -191,6 +191,14 @@ function gpullall() {
 
 	git fetch --all
 	git pull --all
+}
+function gclean() { # git clean all untracked files and staged files
+	git fetch --all --prune
+	git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
+	git clean -fd
+}
+function gchh { # git checkout history
+	git reflog | grep checkout | grep -o 'to .*$' | grep -o ' .*$' |  perl -ne 'print if ++$k{$_}==1' | tail -r | tail -n 10
 }
 
 # VSCode aliases
