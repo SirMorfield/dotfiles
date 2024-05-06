@@ -154,7 +154,7 @@ function copygit {
 function grename { # git rename branch locally and remotely
 	if [ $# -ne 1 ]; then
 		echo "Renames local branch and push to remote"
-		echo "Usage: ghrename <new_branch_name>"
+		echo "Usage: grename <new_branch_name>"
 		return 1
 	fi
 	oldbranch=$(git rev-parse --abbrev-ref HEAD)
@@ -198,13 +198,32 @@ function gclean() { # git clean all untracked files and staged files
 	git clean -fd
 }
 function gchh { # git checkout history
-	git reflog | grep checkout | grep -o 'to .*$' | grep -o ' .*$' |  perl -ne 'print if ++$k{$_}==1' | tail -r | tail -n 10
+	checkout_history=$(git reflog | grep checkout | grep -o 'to .*$' | grep -o ' .*$' |  perl -ne 'print if ++$k{$_}==1' | tail -r | tail -n 10)
+	if [ $# -ne 1 ]; then
+		echo "$checkout_history" | nl -w2 -s' '
+		return
+	fi
+
+	# if parameter is a number, checkout that number
+	if [[ $1 =~ ^[0-9]+$ ]]; then
+		selected=$(echo "$checkout_history" | sed -n "$1p")
+		log_and_run git checkout$selected
+		return
+	fi
+
+	echo "Usage: gchh [number]"
 }
 
 # VSCode aliases
 alias c="code ."
 function cz {
 	log_and_run code $(z -e "$1")
+}
+
+# Rider aliases
+alias r="rider ."
+function rz {
+	log_and_run rider $(z -e "$1")
 }
 
 alias ..2="cd ../.."
