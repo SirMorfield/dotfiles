@@ -75,7 +75,6 @@ function run_if_exists() {
 
 function log_and_run() {
 	echo $PURPLE$@$RESET
-	echo
 	eval "$@"
 }
 
@@ -184,9 +183,8 @@ function gpullall() { # git pull all remote branches
 	git pull --all
 }
 function gclean() { # git clean all untracked files and staged files
-	git fetch --all --prune
-	git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
-	git clean -fd
+	log_and_run git stash --include-untracked -q
+	log_and_run git stash drop -q
 }
 function gchh { # git checkout history
 	checkout_history=$(git reflog | grep checkout | grep -o 'to .*$' | grep -o ' .*$' |  perl -ne 'print if ++$k{$_}==1' | tail -r | tail -n 10)
