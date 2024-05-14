@@ -95,14 +95,6 @@ if [ "$(uname -s)" = "Darwin" ]; then
 	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
-function ensure_link() {
-	if [ ! -L "$2" ]; then
-		rm -rf "$2"
-		mkdir -p "$(dirname "$2")"
-		ln -s "$1" "$2"
-	fi
-}
-
 # Aliases
 if [ "$(uname -s)" = "Linux" ]; then
 	alias ls="ls --color=auto"
@@ -130,7 +122,6 @@ alias z='zshz 2>&1'
 alias gf='git fetch --all --prune'
 alias gch='git checkout'
 alias gcm='git commit -m'
-alias gclean="git checkout . && git clean -fd"
 function gs {
 	log_and_run git stash --include-untracked
 }
@@ -212,6 +203,16 @@ function gchh { # git checkout history
 	fi
 
 	echo "Usage: gchh [number]"
+}
+function gm { # git merge latest version of branch into current branch
+	if [ $# -ne 1 ]; then
+		echo "Usage: gm <branch>"
+		return
+	fi
+	log_and_run git checkout $1
+	log_and_run git pull
+	log_and_run git checkout -
+	log_and_run git merge $1 --no-ff
 }
 
 # VSCode aliases
