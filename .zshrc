@@ -212,6 +212,16 @@ function gm { # git merge latest version of branch into current branch
 	log_and_run git checkout -
 	log_and_run git merge $1 --no-ff --no-edit
 }
+function gr { # git rebase on top of latest version of branch
+	if [ $# -ne 1 ]; then
+		echo "Usage: gr <branch>"
+		return
+	fi
+	log_and_run git checkout $1
+	log_and_run git pull
+	log_and_run git checkout -
+	log_and_run git rebase $1
+}
 
 # VSCode aliases
 alias c="code ."
