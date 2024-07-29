@@ -90,8 +90,10 @@ if [ "$(uname -s)" = "Darwin" ]; then
 
 	add_path "/opt/homebrew/bin"
 	# add_path "/usr/local/bin"
-	add_path "/opt/homebrew/opt/postgresql@15/bin"
+	# add_path "/opt/homebrew/opt/postgresql@15/bin"
+	add_path "/opt/homebrew/opt/ruby/bin"
 	add_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+	add_path "/opt/homebrew/lib/ruby/gems/3.3.0/bin"
 fi
 
 # Aliases
@@ -119,8 +121,15 @@ alias z='zshz 2>&1'
 
 # GIT aliases and functions
 alias gf='git fetch --all --prune'
-alias gch='git checkout'
 alias gcm='git commit -m'
+function gch() {
+	if [ $# -eq 0 ]; then
+		branch="$(git reflog | grep checkout | grep -o 'to .*$' | grep -o ' .*$' |  perl -ne 'print if ++$k{$_}==1' | fzf | tr -d '[:space:]')"
+		git checkout "$branch"
+		return
+	fi
+	git checkout $@
+}
 function gs {
 	log_and_run git stash --include-untracked
 }
@@ -187,7 +196,7 @@ function gclean() { # git clean all untracked files and staged files
 	log_and_run git stash drop -q
 }
 function gchh { # git checkout history
-	checkout_history=$(git reflog | grep checkout | grep -o 'to .*$' | grep -o ' .*$' |  perl -ne 'print if ++$k{$_}==1' | tail -r | tail -n 10)
+	checkout_history=$(git reflog | grep checkout | grep -o 'to .*$' | grep -o ' .*$' |  perl -ne 'print if ++$k{$_}==1' | tail -r | tail -n 15)
 	if [ $# -ne 1 ]; then
 		echo "$checkout_history" | nl -w2 -s' '
 		return
@@ -368,3 +377,6 @@ add_path "/opt/homebrew/opt/openjdk@17/bin"
 
 # De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
 export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}' | sed 's/:$//')
+
+# bun completions
+[ -s "/Users/joppe/.bun/_bun" ] && source "/Users/joppe/.bun/_bun"
