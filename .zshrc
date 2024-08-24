@@ -48,6 +48,12 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 
+
+# Set .zsh_history max liness
+HISTSIZE=1000000
+SAVEHIST=1000000
+setopt EXTENDED_HISTORY # Write the history file in the ":start:elapsed;command" format.
+
 # Set preferred editor
 export EDITOR='vim'
 export VISUAL='vim'
@@ -148,7 +154,7 @@ function gam { # git ammend all files
 	git commit --amend --no-edit > /dev/null
 }
 function copygit {
-	log_and_run find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \;
+	log_and_run find "$1" -mindepth 1 -maxdepth 1 -not -name .git -exec cp -rf {} $2 \\;
 }
 function grename { # git rename branch locally and remotely
 	if [ $# -ne 1 ]; then
