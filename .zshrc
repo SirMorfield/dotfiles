@@ -383,6 +383,3 @@ add_path "/opt/homebrew/opt/openjdk@17/bin"
 
 # De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
 export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}' | sed 's/:$//')
-
-# bun completions
-[ -s "/Users/joppe/.bun/_bun" ] && source "/Users/joppe/.bun/_bun"
