@@ -222,6 +222,7 @@ function gm { # git merge latest version of branch into current branch
 		echo "Usage: gm <branch>"
 		return
 	fi
+	set -e
 	log_and_run git checkout $1
 	log_and_run git pull
 	log_and_run git checkout -
@@ -232,6 +233,7 @@ function gr { # git rebase on top of latest version of branch
 		echo "Usage: gr <branch>"
 		return
 	fi
+	set -e
 	log_and_run git checkout $1
 	log_and_run git pull
 	log_and_run git checkout -
@@ -241,13 +243,23 @@ function gr { # git rebase on top of latest version of branch
 # VSCode aliases
 alias c="code ."
 function cz {
-	log_and_run code $(z -e "$1")
+	project=$(z -e "$1")
+	if [ -z "$project" ]; then
+		echo "Path not found"
+		return 1
+	fi
+	log_and_run code "$project"
 }
 
 # Rider aliases
 alias r="rider ."
 function rz {
-	log_and_run rider $(z -e "$1")
+	project=$(z -e "$1")
+	if [ -z "$project" ]; then
+		echo "Path not found"
+		return 1
+	fi
+	log_and_run rider "$project"
 }
 
 alias ..2="cd ../.."
