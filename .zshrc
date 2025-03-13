@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/Users/joppe/completions:"* ]]; then export FPATH="/Users/joppe/completions:$FPATH"; fi
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
@@ -92,7 +94,7 @@ fi
 if [ "$(uname -s)" = "Darwin" ]; then
 	# Disable brew update before every package install
 	# Manually update with: `brew update`
-	# export HOMEBREW_NO_AUTO_UPDATE=1
+	export HOMEBREW_NO_AUTO_UPDATE=1
 
 	add_path "/opt/homebrew/bin"
 	# add_path "/usr/local/bin"
@@ -122,11 +124,19 @@ alias leak="valgrind --leak-check=full --show-leak-kinds=definite,indirect,possi
 alias notes="code $HOME/git/notes"
 alias dc="docker compose"
 
+function json() {
+	if [ $# -eq 0 ]; then
+		echo "Usage: json <string>"
+		return
+	fi
+	echo "$1" | jq | pbcopy
+}
+
 # quick navigator: https://github.com/agkozak/zsh-z
 alias z='zshz 2>&1'
 
 # GIT aliases and functions
-alias gf='git fetch --all --prune'
+# alias gf='git fetch --all --prune'
 alias gcm='git commit -m'
 function gch() {
 	if [ $# -eq 0 ]; then
@@ -141,6 +151,9 @@ function gs {
 }
 function gp {
 	log_and_run git stash pop
+}
+function gf {
+	log_and_run git push --force-with-lease
 }
 function gam { # git ammend all files
 	if [ $# -eq 0 ]; then
@@ -222,10 +235,10 @@ function gm { # git merge latest version of branch into current branch
 		echo "Usage: gm <branch>"
 		return
 	fi
-	set -e
-	log_and_run git checkout $1
-	log_and_run git pull
-	log_and_run git checkout -
+
+	log_and_run git checkout $1 && \
+	log_and_run git pull && \
+	log_and_run git checkout - && \
 	log_and_run git merge $1 --no-ff --no-edit
 }
 function gr { # git rebase on top of latest version of branch
@@ -233,10 +246,9 @@ function gr { # git rebase on top of latest version of branch
 		echo "Usage: gr <branch>"
 		return
 	fi
-	set -e
-	log_and_run git checkout $1
-	log_and_run git pull
-	log_and_run git checkout -
+	log_and_run git checkout $1 && \
+	log_and_run git pull && \
+	log_and_run git checkout - && \
 	log_and_run git rebase $1
 }
 
@@ -392,6 +404,14 @@ add_path "$ANDROID_HOME/platform-tools"
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 add_path "$HOME/.jenv/shims"
 add_path "/opt/homebrew/opt/openjdk@17/bin"
+
+# Go
+add_path "$HOME/go/bin"
+
+# Deno
+. "$HOME/.deno/env"
+autoload -Uz compinit
+compinit
 
 # De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
 export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}' | sed 's/:$//')
