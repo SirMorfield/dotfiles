@@ -124,12 +124,16 @@ alias leak="valgrind --leak-check=full --show-leak-kinds=definite,indirect,possi
 alias notes="code $HOME/git/notes"
 alias dc="docker compose"
 
-function json() {
+function json {
 	if [ $# -eq 0 ]; then
 		echo "Usage: json <string>"
 		return
 	fi
-	echo "$1" | jq | pbcopy
+	result=$(echo "$1" | jq)
+	if [ $? -ne 0 ]; then
+		return
+	fi
+	echo "$result" | pbcopy
 }
 
 # quick navigator: https://github.com/agkozak/zsh-z
@@ -138,13 +142,14 @@ alias z='zshz 2>&1'
 # GIT aliases and functions
 # alias gf='git fetch --all --prune'
 alias gcm='git commit -m'
-function gch() {
+function gch {
 	if [ $# -eq 0 ]; then
 		branch="$(git reflog | grep checkout | grep -o 'to .*$' | grep -o ' .*$' |  perl -ne 'print if ++$k{$_}==1' | fzf | tr -d '[:space:]')"
 		git checkout "$branch"
 		return
 	fi
 	git checkout $@
+	echo git checkout $@ >> ~/.zsh_history
 }
 function gs {
 	log_and_run git stash --include-untracked
@@ -155,7 +160,7 @@ function gp {
 function gf {
 	log_and_run git push --force-with-lease
 }
-function gam { # git ammend all files
+function gam { # git amend all files
 	if [ $# -eq 0 ]; then
 		echo "Usage: gam <files>"
 		return
@@ -250,6 +255,9 @@ function gr { # git rebase on top of latest version of branch
 	log_and_run git pull && \
 	log_and_run git checkout - && \
 	log_and_run git rebase $1
+}
+function gl { # git log with pretty format
+	git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(cyan)%ad %ar%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --date=format:'%a, %d %b %H:%M'
 }
 
 # VSCode aliases
