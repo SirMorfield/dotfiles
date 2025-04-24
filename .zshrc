@@ -122,7 +122,7 @@ alias dc="docker compose"
 function json {
 	if [ $# -eq 0 ]; then
 		echo "Usage: json <string>"
-		return
+		return 1
 	fi
 	result=$(echo "$1" | jq)
 	if [ $? -ne 0 ]; then
@@ -244,8 +244,15 @@ function gm { # git merge latest version of branch into current branch
 function gr { # git rebase on top of latest version of branch
 	if [ $# -ne 1 ]; then
 		echo "Usage: gr <branch>"
-		return
+		return 1
 	fi
+
+	current_branch=$(git rev-parse --abbrev-ref HEAD)
+	if [ "$current_branch" = "$1" ]; then
+		echo "Cannot rebase on the same branch: $current_branch"
+		return 1
+	fi
+
 	log_and_run git checkout $1 && \
 	log_and_run git pull && \
 	log_and_run git checkout - && \
