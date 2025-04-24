@@ -51,11 +51,6 @@ ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 
 
-# Set .zsh_history max liness
-HISTSIZE=1000000
-SAVEHIST=1000000
-setopt EXTENDED_HISTORY # Write the history file in the ":start:elapsed;command" format.
-
 # Set preferred editor
 export EDITOR='vim'
 export VISUAL='vim'
@@ -417,9 +412,20 @@ add_path "/opt/homebrew/opt/openjdk@17/bin"
 add_path "$HOME/go/bin"
 
 # Deno
-. "$HOME/.deno/env"
-autoload -Uz compinit
-compinit
+if which deno > /dev/null; then
+	. "$HOME/.deno/env"
+	autoload -Uz compinit
+	compinit
+fi;
+
+# Set .zsh_history max lines
+HISTSIZE=10000000
+SAVEHIST=10000000
+
+setopt EXTENDED_HISTORY     # Write the history file in the ":start:elapsed;command" format.
+setopt HIST_REDUCE_BLANKS   # Remove superfluous blanks from each command
+setopt no_hist_ignore_space # Do not ignore commands that start with a space
+
 
 # De duplicating paths inside $PATH https://www.linuxjournal.com/content/removing-duplicate-path-entries
 export PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print $0}' | sed 's/:$//')
