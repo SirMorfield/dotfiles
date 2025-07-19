@@ -266,13 +266,13 @@ function gr { # git rebase on top of latest version of branch
 	log_and_run git checkout - && \
 	log_and_run git rebase $1
 }
-_gm_complete() {
+_gr_complete() {
   _arguments '1: :->branch' && return 0
   if [[ $state == branch ]]; then
 	compadd $(git for-each-ref --format='%(refname:short)' refs/heads/)
   fi
 }
-compdef _gm_complete gr
+compdef _gr_complete gr
 
 function gl { # git log with pretty format
 	git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(cyan)%ad %ar%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --date=format:'%a, %d %b %H:%M'
