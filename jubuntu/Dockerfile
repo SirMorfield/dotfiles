@@ -7,7 +7,6 @@ RUN /init.sh
 
 FROM ubuntu:22.04
 
-RUN apt-get update && apt-get install -y bash && rm -rf /var/lib/apt/lists/*
-
+COPY --from=builder /etc/apt/sources.list /etc/apt/sources.list
 
 CMD ["/bin/bash"]

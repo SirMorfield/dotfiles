@@ -248,7 +248,6 @@ _gm_complete() {
   fi
 }
 compdef _gm_complete gm
-
 function gr { # git rebase on top of latest version of branch
 	if [ $# -ne 1 ]; then
 		echo "Usage: gr <branch>"
@@ -276,6 +275,48 @@ compdef _gr_complete gr
 
 function gl { # git log with pretty format
 	git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(cyan)%ad %ar%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --date=format:'%a, %d %b %H:%M'
+}
+
+
+ghlogs() {
+  # Fetch the latest GitHub runs
+  local runs
+  runs=$(gh run list --limit 10 --json databaseId,status,displayTitle -q '.[] | "\(.databaseId) \(.status) \(.displayTitle)"' | grep in_progress)
+
+  if [[ -z "$runs" ]]; then
+    echo "No recent GitHub Actions runs found."
+    return 1
+  fi
+
+  # Count number of runs
+  local count
+  count=$(echo "$runs" | wc -l)
+
+  local selected_run
+
+  if [[ "$count" -eq 1 ]]; then
+    # Only one run
+    selected_run=$(echo "$runs" | awk '{print $1}')
+  else
+    # Multiple runs — use fzf if available, otherwise fallback to manual selection
+    if command -v fzf >/dev/null 2>&1; then
+      selected_run=$(echo "$runs" | fzf --prompt="Select GitHub Action: " | awk '{print $1}')
+    else
+      echo "Multiple runs found:"
+      select line in $runs; do
+        selected_run=$(echo "$line" | awk '{print $1}')
+        break
+      done
+    fi
+  fi
+
+  if [[ -n "$selected_run" ]]; then
+    echo "Showing logs for run ID: $selected_run"
+    gh run view "$selected_run" --log
+  else
+    echo "No run selected."
+    return 1
+  fi
 }
 
 # VSCode aliases
