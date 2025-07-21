@@ -22,6 +22,7 @@ apt-get install -y -qq \
     libicu-dev \
 	unzip \
 	gnupg \
+	htop \
 	locales
 
 # Install doctl, for authenticating with the k8s cluster
